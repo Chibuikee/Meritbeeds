@@ -7,6 +7,7 @@ import {
   userIsLoggedIn,
   userIsLoggedOut,
 } from "../../redux/features/slices/authSlice";
+import useIsUserLoggedIn from "../UserLogInState";
 // import { collectUserState } from "../../firebase/auth";
 // import { FaBars } from "react-icons/fa";
 // import { RiArrowDropDownLine, RiCloseFill } from "react-icons/ri";
@@ -16,7 +17,10 @@ import {
 
 function Navbar() {
   const [userlogInState, setUserlogInState] = useState("");
+  const LogInState = useIsUserLoggedIn();
+  // const LogInState = useSelector((state) => state.);
   // function to log user out from firebase
+
   const logUserOut = useLogOut();
   const dispatch = useDispatch();
 
@@ -50,12 +54,14 @@ function Navbar() {
             User: <span>{userlogInState && userlogInState}</span>
           </h2>
 
-          <button
-            className="px-4 py-1 rounded bg-blue-600"
-            onClick={logUserOut}
-          >
-            Log out
-          </button>
+          {LogInState ? (
+            <button
+              className="px-4 py-1 rounded bg-blue-600"
+              onClick={logUserOut}
+            >
+              Log out
+            </button>
+          ) : null}
         </div>
         {/* <div className="menu-main-ctn lg:basis-[70%] relative">
           <input type="checkbox" id="check" className="hidden" />

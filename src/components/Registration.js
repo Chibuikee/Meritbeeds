@@ -3,6 +3,7 @@ import { toast } from "react-toastify";
 import { auth } from "../firebase/config";
 import { UseCreateNewUser } from "../firebase/auth";
 import PasswordReset from "./Reset";
+import { Link } from "react-router-dom";
 const Registration = () => {
   const InitiaState = {
     // createdAt: Timestamp.now().toDate(),
@@ -39,7 +40,6 @@ const Registration = () => {
               placeholder="Full name"
             />
           </div>
-
           <div className="flex gap-5 p-1">
             <label>Email:</label>
             <input
@@ -50,7 +50,6 @@ const Registration = () => {
               onChange={handleChange}
             />
           </div>
-
           <div className="flex gap-5 p-1">
             <label>Password:</label>
             <input
@@ -61,7 +60,6 @@ const Registration = () => {
               placeholder="pick a password"
             />
           </div>
-
           <div className="flex gap-5 p-1">
             <label>Confirm Password:</label>
             <input
@@ -72,8 +70,12 @@ const Registration = () => {
               placeholder="confirm password"
             />
           </div>
-
-          <button type="submit">Sign up</button>
+          <button className="bg-[purple] px-2 py-1" type="submit">
+            Sign up
+          </button>
+          <Link to="/Signin">
+            <button className="bg-[green] px-2 py-1">Login</button>
+          </Link>
         </form>
         <PasswordReset />
       </div>

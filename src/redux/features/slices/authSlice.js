@@ -20,16 +20,16 @@ export const authSlice = createSlice({
         userID,
       };
     },
-    userIsLoggedOut: () => {
+    userIsLoggedOut: (state, action) => {
       return initialState;
     },
   },
 });
 // state selection functions
-export const selectIsLoggedIn = (state) => state.userAuth.isLoggedIn;
-export const selectEmail = (state) => state.userAuth.email;
-export const selectUserName = (state) => state.userAuth.userName;
-export const selectUserID = (state) => state.userAuth.userID;
+export const selectIsLoggedIn = (state) => state.authReducer.isLoggedIn;
+export const selectEmail = (state) => state.authReducer.email;
+export const selectUserName = (state) => state.authReducer.userName;
+export const selectUserID = (state) => state.authReducer.userID;
 
 export const { userIsLoggedIn, userIsLoggedOut } = authSlice.actions;
 export default authSlice.reducer;

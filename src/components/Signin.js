@@ -4,7 +4,6 @@ import {
   signInWithEmailAndPassword,
   signInWithPopup,
   // GoogleAuthProvider,
-  signOut,
 } from "firebase/auth";
 import { auth, provider } from "../firebase/config";
 import { useNavigate } from "react-router-dom";
@@ -16,27 +15,23 @@ const Signin = () => {
     password: "",
   };
   const [formValue, setFormData] = useState(InitiaState);
-  //   google authuentication
 
   const navigate = useNavigate();
+  //   google authuentication
   function handleGoogleSignIn() {
     signInWithPopup(auth, provider)
       .then((result) => {
-        const user = result.user;
+        // const user = result.user;
         toast("Sign in succesful");
         navigate("/Adminpage");
-        console.log(user.displayName);
       })
       .catch((error) => {
         // Handle Errors here.
-        // const errorCode = error.code;
+
         const errorMessage = error.message;
         toast.error(`Sign in unsuccessful ${errorMessage}`);
         // The email of the user's account used.
         // const email = error.customData.email;
-        // The AuthCredential type that was used.
-        // const credential = GoogleAuthProvider.credentialFromError(error);
-        // ...
       });
   }
 
@@ -58,18 +53,7 @@ const Signin = () => {
         toast.error(errorMessage);
       });
   };
-  function handleSignOut() {
-    signOut(auth)
-      .then(() => {
-        // Sign-out successful.
-        toast("Sign-out successful");
-        navigate("/Signin");
-      })
-      .catch((error) => {
-        // An error happened.
-        toast("Sign-out Failed");
-      });
-  }
+
   function handleChange(e) {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
@@ -108,12 +92,6 @@ const Signin = () => {
             onClick={handleGoogleSignIn}
           >
             Sign In with google
-          </button>
-          <button
-            className="rounded px-4 py-2 bg-[red]"
-            onClick={handleSignOut}
-          >
-            Sign out
           </button>
         </div>
       </form>
