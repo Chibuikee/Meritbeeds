@@ -1,6 +1,8 @@
 import React from "react";
+import { useDeletedoc } from "../../firebase/dataBase";
 
 export default function ProductBuilder({ product }) {
+  const deleteProduct = useDeletedoc();
   return (
     <div
       //   onClick={() => opendetails(moviedataList.id)}
@@ -21,6 +23,7 @@ export default function ProductBuilder({ product }) {
         <h3>{product.productTitle}</h3>
         <h3>{product.price}</h3>
         <h3 className="text-xs text-[purple]">{product.description}</h3>
+        <button onClick={() => deleteProduct(product.id)}>Delete item</button>
       </div>
     </div>
   );

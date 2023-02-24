@@ -2,7 +2,9 @@ import {
   updateProfile,
   createUserWithEmailAndPassword,
   signOut,
+  onAuthStateChanged,
 } from "firebase/auth";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { auth } from "./config";
@@ -24,6 +26,19 @@ export function updateUserProfile(user) {
       toast.error("Profile name not updated");
     });
 }
+
+// get a real time user details
+export function useRealtimeUserDetails() {
+  console.log("getting user authentication");
+  const [idContainer, setIdContainer] = useState();
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      setIdContainer(user);
+    }
+  });
+  return idContainer;
+}
+
 export function UseCreateNewUser() {
   // put this in a hook because usenavigate can only be called in a hook or react function
   const navigate = useNavigate();
@@ -44,18 +59,19 @@ export function UseCreateNewUser() {
   }
   return CreateNewUser;
 }
-export function CollectUserProfile() {
-  const user = auth.currentUser;
-  console.log(user);
-  if (user !== null) {
-    // The user object has basic properties such as display name, email, etc.
-    const displayName = user.displayName;
-    // const email = user.email;
-    // const photoURL = user.photoURL;
-    // const emailVerified = user.emailVerified;
-    toast(displayName);
-  }
-}
+// export function CollectUserProfile() {
+//   const user = auth.currentUser;
+//   console.log(user);
+//   if (user !== null) {
+//     // The user object has basic properties such as display name, email, etc.
+//     // const displayName = user.displayName;
+//     // // const email = user.email;
+//     // // const photoURL = user.photoURL;
+//     // // const emailVerified = user.emailVerified;
+//     // toast(displayName);
+//     return user;
+//   }
+// }
 
 export default function useLogOut() {
   const navigate = useNavigate();

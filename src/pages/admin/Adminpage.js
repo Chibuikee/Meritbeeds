@@ -1,6 +1,5 @@
 import AllProducts from "../../components/allProducts/allProductAdmin";
 import ItemsUpload from "../../components/ItemsUpload";
-import { CollectUserProfile } from "../../firebase/auth";
 // import { CollectUserProfile } from "../../firebase/auth";
 
 function Adminpage() {
@@ -19,12 +18,12 @@ function Adminpage() {
         </div>
         <ItemsUpload />
 
-        <button
+        {/* <button
           onClick={CollectUserProfile}
           className="p-1 rounded  bg-[purple]"
         >
           Get user name
-        </button>
+        </button> */}
         <AllProducts />
       </div>
     </section>

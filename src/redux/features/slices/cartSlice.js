@@ -7,6 +7,14 @@ export const cartSlice = createSlice({
   name: "cart",
   initialState,
   reducers: {
+    uploadToCart: (state, action) => {
+      if (action.payload) {
+        console.log(action.payload, "from upload reducer");
+        return [...action.payload];
+      } else {
+        return state;
+      }
+    },
     addToCart: (state, action) => {
       const insideCart = findItemInCart(state, action.payload);
       if (insideCart) {
@@ -51,6 +59,7 @@ export const cartSlice = createSlice({
 });
 
 // Action creators are generated for each case reducer function
-export const { addToCart, reduceQtyInCart, removeFromCart } = cartSlice.actions;
+export const { addToCart, reduceQtyInCart, removeFromCart, uploadToCart } =
+  cartSlice.actions;
 
 export default cartSlice.reducer;
