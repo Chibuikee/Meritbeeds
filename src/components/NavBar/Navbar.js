@@ -1,26 +1,18 @@
 import { onAuthStateChanged } from "firebase/auth";
 import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import useLogOut from "../../firebase/auth";
 import { auth } from "../../firebase/config";
-import {
-  userIsLoggedIn,
-  userIsLoggedOut,
-} from "../../redux/features/slices/authSlice";
-import { useIsUserLoggedIn } from "../../customHooks/UserLogInState";
-// import { collectUserState } from "../../firebase/auth";
-// import { FaBars } from "react-icons/fa";
-// import { RiArrowDropDownLine, RiCloseFill } from "react-icons/ri";
-// import { NavMenuList, NavMenuUtilityList } from "./NavData";
-// import { useDispatch } from "react-redux";
-// import { Link } from "react-router-dom";
+import { userIsLoggedIn } from "../../redux/features/slices/authSlice";
 
 function Navbar() {
-  const [userlogInState, setUserlogInState] = useState("");
-  const LogInState = useIsUserLoggedIn();
-  // const LogInState = useSelector((state) => state.);
+  const [userlogInState, setUserlogInState] = useState(null);
+
+  // const rootReducer = useSelector((state) => state?.rootReducer);
+  // const user = rootReducer?.authReducer;
   // function to log user out from firebase
+  console.log(`the user info ${userlogInState?.userID}`);
 
   const logUserOut = useLogOut();
   const dispatch = useDispatch();
@@ -28,7 +20,7 @@ function Navbar() {
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
-        setUserlogInState(user.displayName);
+        setUserlogInState(user);
         dispatch(
           userIsLoggedIn({
             isLoggedIn: true,
@@ -39,11 +31,12 @@ function Navbar() {
         );
       } else {
         // User is signed out
-        dispatch(userIsLoggedOut());
-        setUserlogInState("");
+        // dispatch(userIsLoggedOut());
+        // setUserlogInState("");
       }
     });
   }, []);
+
   return (
     <nav className="sticky top-0 z-[999] w-full bg-white py-[2rem]">
       <div className=" sm:w-[540px] md:w-[720px] px-3 lg:max-w-[1280px] xl:max-w-[1536px] flex flex-wrap justify-between items-center mx-auto ">
@@ -60,10 +53,10 @@ function Navbar() {
             <span>CART</span>
           </Link>
           <h2>
-            User: <span>{userlogInState && userlogInState}</span>
+            User: <span>{userlogInState && userlogInState?.displayName}</span>
           </h2>
 
-          {LogInState ? (
+          {userlogInState ? (
             <button
               className="px-4 py-1 rounded bg-blue-600"
               onClick={logUserOut}

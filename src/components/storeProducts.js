@@ -2,10 +2,7 @@ import { Link } from "react-router-dom";
 
 export default function ProductPreview({ product }) {
   return (
-    <div
-      //   onClick={() => opendetails(moviedataList.id)}
-      className="w-[200px]"
-    >
+    <div className="w-[200px]">
       <div className="poster">
         <img
           className="w-[50px] h-[50px]"

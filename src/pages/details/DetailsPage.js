@@ -1,48 +1,58 @@
-import { doc, getDoc } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
-import { db } from "../../firebase/config";
-import { useDispatch } from "react-redux";
+// import { db } from "../../firebase/config";
+// import { useDispatch } from "react-redux";
+// import {
+//   useAddToCart,
+//   useGeneralCartUpdateCart,
+//   useRemoveFromCart,
+// } from "../../firebase/dataBase";
+import { skipToken } from "@reduxjs/toolkit/dist/query";
+import { useFetchProductQuery } from "../../redux/features/slices/StoreData";
 import {
-  useAddToCart,
-  useGeneralCartUpdateCart,
-  useRemoveFromCart,
-} from "../../firebase/dataBase";
-import { addToCart } from "../../redux/features/slices/cartSlice";
+  useCartFirebaseUpdate,
+  useCartSliceFN,
+} from "../../customHooks/cartHooks";
+import { useSelector } from "react-redux";
 
 function DetailsPage() {
-  const [productData, setProductData] = useState("");
-  const params = useParams();
-  const generalCartUpdateCart = useGeneralCartUpdateCart();
-  const { productId } = params;
-  const dispatch = useDispatch();
-  const addedToCart = useAddToCart();
-  const removeFromCart = useRemoveFromCart();
-  const docRef = doc(db, "products", productId);
+  const [newcartState, setCartItems] = useState(null);
+  const { productId } = useParams();
+  const { data, isLoading, isError, error } = useFetchProductQuery(
+    productId ? productId : skipToken
+  );
+
+  const rootReducer = useSelector((state) => state?.rootReducer);
+  const user = rootReducer?.authReducer;
+  const cart = rootReducer?.cartReducer;
+  const [syncCartState] = useCartFirebaseUpdate(user?.userID);
+  const [shouldCartStateSynchronise, setShouldCartStateSynchronise] =
+    useState(false);
+  const [getSetUpdateDeleteCart] = useCartSliceFN(setCartItems);
+
   useEffect(() => {
-    async function getProduct() {
-      const docSnap = await getDoc(docRef);
-      if (docSnap.exists()) {
-        setProductData(docSnap.data());
-      } else {
-        toast("Product not available");
-      }
+    isError && toast.error(error);
+  }, [isError]);
+
+  useEffect(() => {
+    // the shouldCartStateSynchronise state is set to true after mount to allow synchronization
+
+    // the shouldCartStateSynchronise state is set to false on mount to prevent synchronization and is checked on mount
+    if (cart) {
+      setShouldCartStateSynchronise(true);
+      // syncCartState is called everytime the cart state is changed by the getSetUpdateDeleteCart function
+      shouldCartStateSynchronise && syncCartState(newcartState);
     }
-    getProduct();
-  }, []);
-  function hi(tobe) {
-    return new Promise((resolve, reject) => {
-      dispatch(addToCart(tobe));
-      console.log("item added to cart!");
-      // Code for the hi function goes here
-      resolve();
-    });
+  }, [newcartState]);
+
+  if (isLoading) {
+    return <h1>It`s loading, Please wait!</h1>;
   }
   return (
     <section>
       Details Page
-      {productData && (
+      {data && (
         <div
           //   onClick={() => opendetails(moviedataList.id)}
           className="w-[200px]"
@@ -50,30 +60,56 @@ function DetailsPage() {
           <div className="poster">
             <img
               className="w-[50px] h-[50px]"
-              src={productData.imageUrl}
+              src={data.imageUrl}
               alt="product"
             />
           </div>
+          <div className="poster">
+            {data.imageUrl1 && (
+              <img
+                className="w-[50px] h-[50px]"
+                src={data.imageUrl1}
+                alt="product"
+              />
+            )}
+          </div>
+          <div className="poster">
+            {data.imageUrl2 && (
+              <img
+                className="w-[50px] h-[50px]"
+                src={data.imageUrl2}
+                alt="product"
+              />
+            )}
+          </div>
           <h1 className=" bg-[purple]">DETAILS</h1>
           <div className="details">
-            <h3>{productData.category}</h3>
+            <h3>{data.category}</h3>
             {/* <h3>Release Date:{product.createdAt}</h3> */}
-            <h3>{productData.shortDescription}</h3>
-            <h3>{productData.productTitle}</h3>
-            <h3>{productData.price}</h3>
-            <h3 className="text-xs text-[purple]">{productData.description}</h3>
+            <h3>{data.shortDescription}</h3>
+            <h3>{data.productTitle}</h3>
+            <h3>{data.price}</h3>
+            <h3 className="text-xs text-[purple]">{data.description}</h3>
           </div>
           <button
             onClick={() => {
-              hi({ ...productData, id: productId }).then(() => {
-                generalCartUpdateCart();
-                console.log("general update done!!!");
+              getSetUpdateDeleteCart("addToCart", cart, {
+                ...data,
+                id: productId,
               });
+              console.log("added to cart done!!!");
             }}
           >
             Add to cart
           </button>
-          <button onClick={() => removeFromCart(productData)}>
+          <button
+            onClick={() => {
+              getSetUpdateDeleteCart("removeFromCart", cart, {
+                id: productId,
+              });
+              console.log("removed from cart done!!!");
+            }}
+          >
             Remove from cart
           </button>
         </div>

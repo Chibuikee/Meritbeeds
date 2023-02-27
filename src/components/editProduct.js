@@ -2,7 +2,12 @@ import React, { useState, useEffect, useRef } from "react";
 import { toast } from "react-toastify";
 import { FiSearch } from "react-icons/fi";
 import { useUpLoadfile } from "../firebase/storage";
-import { useAddToMeritStoreMutation } from "../redux/features/slices/StoreData";
+import {
+  useFetchProductQuery,
+  useUpdateMeritStoreProductMutation,
+} from "../redux/features/slices/StoreData";
+import { useNavigate, useParams } from "react-router-dom";
+import { skipToken } from "@reduxjs/toolkit/dist/query";
 
 const InitiaState = {
   productTitle: "",
@@ -10,22 +15,36 @@ const InitiaState = {
   description: "",
   price: "",
   imageUrl: "",
+  imageUrl1: "",
+  imageUrl2: "",
   category: "",
 };
-function ItemsUpload() {
+function Editproduct() {
   const [formData, setFormData] = useState(() => InitiaState);
   const [file, setFile] = useState(null);
-  const [Progress, setProgress] = useState(0);
+  const [Progess, setProgess] = useState(0);
   const imageInputElement = useRef();
+  const { productEditId } = useParams();
+  const navigate = useNavigate();
+  //   console.log(productEditId);
   //   the hook is used to upload pictures to firestore database
-  const upLoadfile = useUpLoadfile(setFormData, setProgress, file);
-  //this hook from rtk query is used to write to the firestore database
-  const [addToMeritStore] = useAddToMeritStoreMutation();
-
+  const upLoadfile = useUpLoadfile(setFormData, setProgess, file);
+  //this hook from rtk query is used to update to the firestore database
+  const { data: product } = useFetchProductQuery(
+    productEditId ? productEditId : skipToken
+  );
+  const [updateMeritStoreProduct] = useUpdateMeritStoreProductMutation();
   useEffect(() => {
     // check for file in the state before calling the upload function to upload image to firebase storage
     file && file[Object.keys(file)[0]]?.name && upLoadfile();
   }, [file]);
+
+  useEffect(() => {
+    // check for product and product id in the state before calling the update function to update firebase database
+    if (productEditId && product) {
+      setFormData({ ...product });
+    }
+  }, [productEditId, product]);
 
   function handleChange(e) {
     const { name, value } = e.target;
@@ -38,7 +57,7 @@ function ItemsUpload() {
     // console.log(file[Object.keys(file)[0]].name);
     // console.log(file[Object.keys(file)[0]]);
   }
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
     if (
       !formData.imageUrl ||
@@ -53,33 +72,16 @@ function ItemsUpload() {
       });
       return;
     }
-    addToMeritStore(formData);
-    toast.success("Merit this product has been added, congrats");
+    // console.log(formData);
+    await updateMeritStoreProduct({ productEditId, formData });
+    toast.success("Merit this product has been updated, congrats");
     setFormData(InitiaState);
     setFile(null);
     imageInputElement.current.value = "";
-    setProgress(0);
+    setProgess(0);
+    navigate("/Adminpage");
   }
 
-  //   add an array of data to  the database
-  //   To be used for uploading data to database
-  //   const addToDb = collection(db, "shoeDb");
-
-  //   async function uploadDatabase() {
-  //     try {
-  //       ShoeDB.forEach((item) => {
-  //         addDoc(addToDb, item);
-  //       });
-  //       console.log("This Database is updated, congrats");
-  //     } catch (error) {
-  //       console.error("Error creating DATABASE: ", error);
-  //     }
-  //   }
-  // function handleSubmitnow(e) {
-  //   e.preventDefault();
-
-  //   console.log(formData);
-  // }
   return (
     <section>
       <div className="text-[white] text-[1.5rem] w-[100%] ">
@@ -93,13 +95,6 @@ function ItemsUpload() {
           <input placeholder="Search" />
           <FiSearch />
         </div>
-
-        {/* <h1
-            onClick={uploadDatabase}
-            className="bg-[grey] text-white w-full s:w-[initial] mt-5 py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-          >
-            UPLOAD ALL THE DATABASE
-          </h1> */}
 
         <div className=" m:w-[400px] mx-auto md:mx-[initial] my-10">
           <h1 className="text-[1.3rem] text-[red] font-semibold">
@@ -183,12 +178,10 @@ function ItemsUpload() {
               Submit
             </button>
           </form>
-          <span className={`${Progress === 0 ? "hidden" : "inline"}`}>
-            {Progress === 0 ? 0 : Progress}
+          <span className={`${Progess === 0 ? "hidden" : "inline"} `}>
+            {Progess === 0 ? 0 : Progess}
           </span>
-          <div
-            className={`h-[2px] bg-[red] w-[${Progress === 0 ? 0 : Progress}%]`}
-          ></div>
+          <div className="h-[2] w-[10] bg-[red]">helllo</div>
         </div>
         <div>
           <h6 className="text-sm text-[grey] max-w-[400px]">
@@ -202,4 +195,4 @@ function ItemsUpload() {
   );
 }
 
-export default ItemsUpload;
+export default Editproduct;

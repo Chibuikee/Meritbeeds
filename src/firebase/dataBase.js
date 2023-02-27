@@ -15,44 +15,30 @@ import { useDispatch, useSelector } from "react-redux";
 import { useIsUserid } from "../customHooks/UserLogInState";
 import { uploadToCart } from "../redux/features/slices/cartSlice";
 // import { useRealtimeUserDetails } from "./auth";
-export function useWriteDb(formData) {
-  const productsRef = collection(db, "products");
-  async function writeDb() {
-    try {
-      await addDoc(productsRef, formData);
-      toast("Merit this product has been added, congrats", {
-        type: "success",
-      });
-    } catch (error) {
-      toast("This value is not updated, try again", { type: "error" });
-    }
-  }
 
-  return writeDb;
-}
-export function useFetchAllProducts() {
-  const [allProductsFetched, setAllProductsFetched] = useState("");
+// export function useFetchAllProducts() {
+//   const [allProductsFetched, setAllProductsFetched] = useState("");
 
-  useEffect(() => {
-    const unsub = onSnapshot(
-      collection(db, "products"),
-      (snapshot) => {
-        const productsData = snapshot.docs.map((doc) => ({
-          id: doc.id,
-          ...doc.data(),
-        }));
-        setAllProductsFetched(productsData);
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
-    return () => {
-      unsub();
-    };
-  }, []);
-  return allProductsFetched;
-}
+//   useEffect(() => {
+//     const unsub = onSnapshot(
+//       collection(db, "products"),
+//       (snapshot) => {
+//         const productsData = snapshot.docs.map((doc) => ({
+//           id: doc.id,
+//           ...doc.data(),
+//         }));
+//         setAllProductsFetched(productsData);
+//       },
+//       (error) => {
+//         console.log(error);
+//       }
+//     );
+//     return () => {
+//       unsub();
+//     };
+//   }, []);
+//   return allProductsFetched;
+// }
 
 // const q = query(CommentRef, orderBy("createdAt", "description"))
 // function to delete a product from the database.FOR ADMIN ONLY IN DASHBOARD

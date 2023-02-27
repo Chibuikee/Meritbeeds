@@ -1,17 +1,18 @@
-// import { collection, onSnapshot, orderBy, query } from "firebase/firestore";
-import { useFetchAllProducts } from "../../firebase/dataBase";
+import { useFetchMeritStoreQuery } from "../../redux/features/slices/StoreData";
 
 import ProductBuilder from "./productBuilder";
 
 function AllProducts() {
-  const fetchProducts = useFetchAllProducts();
-
+  const { data, isLoading, isError, error } = useFetchMeritStoreQuery();
+  if (isLoading) {
+    return <h1>fetching data now, Please wait!</h1>;
+  }
   return (
     <div className="flex">
-      {fetchProducts?.length === 0 ? (
-        <p>No Product Found</p>
+      {data?.length === 0 ? (
+        <p>No Product Found, please add some products to your store Merit</p>
       ) : (
-        fetchProducts?.map((c) => <ProductBuilder key={c.id} product={c} />)
+        data?.map((c) => <ProductBuilder key={c.id} product={c} />)
       )}
     </div>
   );

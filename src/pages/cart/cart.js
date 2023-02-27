@@ -1,53 +1,49 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+// import {
+//   useGeneralCartUpdateCart,
+//   useRemoveFromCart,
+// } from "../../firebase/dataBase";
 import {
-  useGeneralCartUpdateCart,
-  useRemoveFromCart,
-} from "../../firebase/dataBase";
-import { db } from "../../firebase/config";
-import { doc, getDoc } from "firebase/firestore";
-import {
-  removeFromCart,
-  uploadToCart,
-} from "../../redux/features/slices/cartSlice";
+  useCartFirebaseUpdate,
+  useCartSliceFN,
+  useFetchCartFromFirebase,
+} from "../../customHooks/cartHooks";
 
 function Cart() {
-  const { authReducer: user, cartReducer } = useSelector((state) => state);
-  const generalCartUpdateCart = useGeneralCartUpdateCart();
-  // const removeFromCart = useRemoveFromCart();
+  const rootReducer = useSelector((state) => state?.rootReducer);
+  const user = rootReducer?.authReducer;
+  const cart = rootReducer?.cartReducer;
 
   const [cartItems, setCartItems] = useState();
+  const [shouldCartStateSynchronise, setShouldCartStateSynchronise] =
+    useState(false);
+  const [getSetUpdateDeleteCart] = useCartSliceFN(setCartItems);
   const dispatch = useDispatch();
-  const getProduct = async (user) => {
-    // get the user's cart data from Firestore
-    // console.log("getProduct function ran");
-    if (!user) return;
-    const cartRef = doc(db, "carts", user);
-    const docSnap = await getDoc(cartRef);
-    // console.log("whether docSnap is working");
-    if (docSnap.exists()) {
-      console.log(docSnap.data().items, "from cart fetch hook");
-      // dispatch(uploadToCart(docSnap.data().items));
-      setCartItems(docSnap.data().items);
-    } else {
-      // console.log("id not available cart fetch hook not called");
-    }
-  };
+  // synchronize the data on state and firestore database
+  const [syncCartState] = useCartFirebaseUpdate(user?.userID);
+  const [getCartFromFireStore] = useFetchCartFromFirebase(user?.userID);
+
   useEffect(() => {
     // console.log("use effect function ran");
-    getProduct(user?.userID);
-  }, []);
+    if (user) {
+      getCartFromFireStore(setCartItems);
+    }
+  }, [user?.userID]);
   // console.log(cartItems, "whether info has been fetched");
-  // console.log(cartReducer, "cart component rendered");
-  function hi(tobe) {
-    return new Promise((resolve, reject) => {
-      dispatch(removeFromCart(tobe));
-      console.log("item removed from cart!");
+  console.log(cartItems, user?.userID, "cart component rendered");
 
-      resolve();
-    });
-  }
+  useEffect(() => {
+    // the shouldCartStateSynchronise state is set to true after mount to allow synchronization
+
+    // the shouldCartStateSynchronise state is set to false on mount to prevent synchronization and is checked on mount
+    if (cartItems) {
+      setShouldCartStateSynchronise(true);
+      // syncCartState is called everytime the cartitems state is changed by the getSetUpdateDeleteCart function
+      shouldCartStateSynchronise && syncCartState(cartItems);
+    }
+  }, [cartItems]);
 
   return (
     <div>
@@ -69,13 +65,17 @@ function Cart() {
               </Link>
               <button
                 onClick={() => {
+                  getSetUpdateDeleteCart("reduceQtyInCart", cartItems, {
+                    id: "hello",
+                    shortDescription: "",
+                    description: "",
+                    prices: "",
+                    imageUrl: "",
+                    imageUrl1: "",
+                    imageUrl2: "",
+                    categoro: "",
+                  });
                   // removeFromCart(product);
-                  hi(product)
-                    .then(() => {
-                      generalCartUpdateCart();
-                    })
-                    .catch(() => generalCartUpdateCart());
-
                   // getProduct(user?.userID);
                 }}
               >

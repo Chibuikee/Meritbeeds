@@ -6,9 +6,12 @@ export function useUpLoadfile(setFormData, setProgess, file) {
   function upLoadfile() {
     const storageRef = ref(
       storage,
-      `products/${Date.now()}${file?.imageUrl?.name}`
+      `products/${Date.now()}${file[Object.keys(file)[0]].name}`
     );
-    const uploadImageUrl = uploadBytesResumable(storageRef, file?.imageUrl);
+    const uploadImageUrl = uploadBytesResumable(
+      storageRef,
+      file[Object.keys(file)[0]]
+    );
     uploadImageUrl.on(
       "state_changed",
       (snapshot) => {
@@ -24,7 +27,7 @@ export function useUpLoadfile(setFormData, setProgess, file) {
       },
       () => {
         getDownloadURL(uploadImageUrl.snapshot.ref).then((url) => {
-          setFormData((prev) => ({ ...prev, imageUrl: url }));
+          setFormData((prev) => ({ ...prev, [file.namecode]: url }));
           toast("image added successfully", { type: "success" });
           setProgess(0);
         });
