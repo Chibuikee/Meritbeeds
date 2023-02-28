@@ -1,109 +1,103 @@
-// import { doc, setDoc } from "firebase/firestore";
+import { skipToken } from "@reduxjs/toolkit/dist/query";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 // import { toast } from "react-toastify";
-import {
-  useCartFirebaseUpdate,
-  useCartSliceFN,
-} from "../customHooks/cartHooks";
 
-// import { db } from "../firebase/config";
+import {
+  useAddToMeritFavouriteMutation,
+  useFetchMeritFavouriteQuery,
+} from "../redux/features/slices/Wishlist";
 
 function Testtingfunctionpage() {
-  const [newState, setState] = useState([]);
+  const [newUser, setState] = useState([]);
   const user = useSelector((state) => state?.rootReducer.authReducer.userID);
-  const [getSetUpdateDeleteCart] = useCartSliceFN(setState);
-  const [syncCartState] = useCartFirebaseUpdate(user);
-  // console.log(newState, user);
-
+  const [addToMeritFavourite] = useAddToMeritFavouriteMutation();
+  const { data, isLoading, isError, error } = useFetchMeritFavouriteQuery(
+    newUser ? newUser : skipToken
+  );
   useEffect(() => {
-    if (user) {
-      //   const cartRef = doc(db, "carts", user);
-      //   console.log(newState, "this is in update hook!");
-      //   setDoc(cartRef, { items: newState });
-      //   // toast.success("uploaded cart successfully");
-      syncCartState(newState);
-    }
-  }, [newState]);
+    setState(user);
+  }, [user]);
 
-  function reduceQtyInCart() {
-    getSetUpdateDeleteCart("reduceQtyInCart", newState, {
-      id: "hello",
-      shortDescription: "",
-      description: "",
-      prices: "",
-      imageUrl: "",
-      imageUrl1: "",
-      imageUrl2: "",
-      categoro: "",
-    });
-    // const cartRef = doc(db, "carts", user);
-    console.log(newState);
-    // await setDoc(cartRef, { items: newState });
-    // toast.success("reduce cart qty successfully");
-  }
+  function addToCart(state, product) {
+    // check whether a state and product has been passed first and
+    // also ensure that the product is not in the database
+    if (state && product && !state?.find((item) => item?.id === product?.id))
+      addToMeritFavourite({
+        user: newUser,
+        newState: state?.find((item) => item?.id === product?.id)
+          ? state
+          : [...state, product],
+      });
 
-  function uploadToCart() {
-    getSetUpdateDeleteCart("uploadToCart", [], {
-      id: "hello",
-      shortDescription: "",
-      description: "",
-      prices: "",
-      imageUrl: "",
-      imageUrl1: "",
-      imageUrl2: "",
-      categoro: "",
-      qty: 1,
-    });
-    const see = newState;
-    // const cartRef = doc(db, "carts", user);
-    console.log(see, "this is in upload fn");
-    // setDoc(cartRef, { items: newState });
-    // toast.success("uploaded cart successfully");
-  }
-
-  function addToCart() {
-    getSetUpdateDeleteCart("addToCart", newState, {
-      id: "hello",
-      shortDescription: "",
-      description: "",
-      prices: "",
-      imageUrl: "",
-      imageUrl1: "",
-      imageUrl2: "",
-      categoro: "",
-      qty: 1,
-    });
-    // const cartRef = doc(db, "carts", user);
-    console.log(newState);
-    // await setDoc(cartRef, { items: newState });
+    // console.log(newUser);
     // toast.success(" added cart successfully");
   }
-  function removeFromCart() {
-    getSetUpdateDeleteCart("removeFromCart", newState, {
-      id: "hello",
-      shortDescription: "",
-      description: "",
-      prices: "",
-      imageUrl: "",
-      imageUrl1: "",
-      imageUrl2: "",
-      categoro: "",
-      qty: 1,
-    });
-    // const cartRef = doc(db, "carts", user);
-    console.log(newState);
-    // await setDoc(cartRef, { items: newState });
-    // toast.success("removed from cart successfully");
+  function removeFromCart(state, product) {
+    // check whether a state and product has been passed first
+    if (state && product)
+      addToMeritFavourite({
+        user: newUser,
+        newState: state?.filter((item) => item?.id !== product?.id),
+      });
   }
-  console.log(newState);
+  console.log(data);
+  if (isLoading) return <h1>THE DATA IS BEEN FETCHED</h1>;
   return (
-    <div className="flex gap-10">
-      <button onClick={uploadToCart}>uploadToCart</button>
-      <button onClick={addToCart}>addToCart</button>
-      <button onClick={reduceQtyInCart}>reduceQtyInCart</button>
-      <button onClick={removeFromCart}>removeFromCart</button>
-    </div>
+    <section>
+      <div>
+        {data?.map((product) => (
+          <div className="" key={product.id}>
+            <div className="poster flex gap-10">
+              <img
+                className="w-[50px] h-[50px]"
+                src={product.imageUrl}
+                alt="product"
+              />
+              <h3>{product.productTitle}</h3>
+              <h3>{product.price}</h3>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <div className="flex gap-10">
+        <button
+          onClick={() =>
+            addToCart([], {
+              categoro: "",
+              description: "",
+              id: "hello",
+              imageUrl: "",
+              imageUrl1: "",
+              imageUrl2: "",
+              prices: "",
+              qty: 1,
+              shortDescription: "",
+            })
+          }
+        >
+          addToCart
+        </button>
+        <button
+          onClick={() =>
+            removeFromCart(data, {
+              categoro: "",
+              description: "",
+              id: "hello",
+              imageUrl: "",
+              imageUrl1: "",
+              imageUrl2: "",
+              prices: "",
+              qty: 1,
+              shortDescription: "",
+            })
+          }
+        >
+          removeFromCart
+        </button>
+      </div>
+    </section>
   );
 }
 

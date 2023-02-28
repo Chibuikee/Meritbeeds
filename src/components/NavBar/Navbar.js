@@ -52,6 +52,9 @@ function Navbar() {
           <Link to="/Cart">
             <span>CART</span>
           </Link>
+          <Link to="/Testtingfunctionpage">
+            <span>Testing page</span>
+          </Link>
           <h2>
             User: <span>{userlogInState && userlogInState?.displayName}</span>
           </h2>

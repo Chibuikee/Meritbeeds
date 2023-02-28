@@ -57,30 +57,32 @@ function DetailsPage() {
           //   onClick={() => opendetails(moviedataList.id)}
           className="w-[200px]"
         >
-          <div className="poster">
-            <img
-              className="w-[50px] h-[50px]"
-              src={data.imageUrl}
-              alt="product"
-            />
-          </div>
-          <div className="poster">
-            {data.imageUrl1 && (
+          <div className="flex gap-5">
+            <div className="poster">
               <img
                 className="w-[50px] h-[50px]"
-                src={data.imageUrl1}
+                src={data.imageUrl}
                 alt="product"
               />
-            )}
-          </div>
-          <div className="poster">
-            {data.imageUrl2 && (
-              <img
-                className="w-[50px] h-[50px]"
-                src={data.imageUrl2}
-                alt="product"
-              />
-            )}
+            </div>
+            <div className="poster">
+              {data.imageUrl1 && (
+                <img
+                  className="w-[50px] h-[50px]"
+                  src={data.imageUrl1}
+                  alt="product"
+                />
+              )}
+            </div>
+            <div className="poster">
+              {data.imageUrl2 && (
+                <img
+                  className="w-[50px] h-[50px]"
+                  src={data.imageUrl2}
+                  alt="product"
+                />
+              )}
+            </div>
           </div>
           <h1 className=" bg-[purple]">DETAILS</h1>
           <div className="details">
