@@ -12,7 +12,7 @@ function Navbar() {
   // const rootReducer = useSelector((state) => state?.rootReducer);
   // const user = rootReducer?.authReducer;
   // function to log user out from firebase
-  console.log(`the user info ${userlogInState?.userID}`);
+  // console.log(`the user info ${userlogInState?.userID}`);
 
   const logUserOut = useLogOut();
   const dispatch = useDispatch();

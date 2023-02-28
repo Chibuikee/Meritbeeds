@@ -1,19 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
-// import { db } from "../../firebase/config";
-// import { useDispatch } from "react-redux";
-// import {
-//   useAddToCart,
-//   useGeneralCartUpdateCart,
-//   useRemoveFromCart,
-// } from "../../firebase/dataBase";
 import { skipToken } from "@reduxjs/toolkit/dist/query";
 import { useFetchProductQuery } from "../../redux/features/slices/StoreData";
 import {
   useCartFirebaseUpdate,
   useCartSliceFN,
 } from "../../customHooks/cartHooks";
+import { useFavouriteHook } from "../../customHooks/favouritedHooks";
 import { useSelector } from "react-redux";
 
 function DetailsPage() {
@@ -22,11 +16,11 @@ function DetailsPage() {
   const { data, isLoading, isError, error } = useFetchProductQuery(
     productId ? productId : skipToken
   );
-
   const rootReducer = useSelector((state) => state?.rootReducer);
   const user = rootReducer?.authReducer;
   const cart = rootReducer?.cartReducer;
   const [syncCartState] = useCartFirebaseUpdate(user?.userID);
+  const [addToFavourite, removeFromFavourited] = useFavouriteHook();
   const [shouldCartStateSynchronise, setShouldCartStateSynchronise] =
     useState(false);
   const [getSetUpdateDeleteCart] = useCartSliceFN(setCartItems);
@@ -53,10 +47,7 @@ function DetailsPage() {
     <section>
       Details Page
       {data && (
-        <div
-          //   onClick={() => opendetails(moviedataList.id)}
-          className="w-[200px]"
-        >
+        <div className="w-[200px]">
           <div className="flex gap-5">
             <div className="poster">
               <img
@@ -86,10 +77,14 @@ function DetailsPage() {
           </div>
           <h1 className=" bg-[purple]">DETAILS</h1>
           <div className="details">
+            <h3 className="text-[36px]">{data.productTitle}</h3>
             <h3>{data.category}</h3>
-            {/* <h3>Release Date:{product.createdAt}</h3> */}
-            <h3>{data.shortDescription}</h3>
-            <h3>{data.productTitle}</h3>
+            <h3>
+              Release Date:
+              <span className="ml-5">
+                {data.createdAt.toDate().toLocaleString()}
+              </span>
+            </h3>
             <h3>{data.price}</h3>
             <h3 className="text-xs text-[purple]">{data.description}</h3>
           </div>
@@ -114,6 +109,27 @@ function DetailsPage() {
           >
             Remove from cart
           </button>
+          <div className="flex gap-10">
+            <button
+              onClick={() =>
+                addToFavourite({
+                  ...data,
+                  id: productId,
+                })
+              }
+            >
+              add to favourite
+            </button>
+            <button
+              onClick={() =>
+                removeFromFavourited({
+                  id: productId,
+                })
+              }
+            >
+              remove from favourite
+            </button>
+          </div>
         </div>
       )}
     </section>

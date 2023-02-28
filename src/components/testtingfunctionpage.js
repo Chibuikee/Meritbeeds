@@ -5,6 +5,7 @@ import { useSelector } from "react-redux";
 
 import {
   useAddToMeritFavouriteMutation,
+  useDeleteFromMeritFavouriteMutation,
   useFetchMeritFavouriteQuery,
 } from "../redux/features/slices/Wishlist";
 
@@ -12,6 +13,7 @@ function Testtingfunctionpage() {
   const [newUser, setState] = useState([]);
   const user = useSelector((state) => state?.rootReducer.authReducer.userID);
   const [addToMeritFavourite] = useAddToMeritFavouriteMutation();
+  const [deleteFromMeritFavourite] = useDeleteFromMeritFavouriteMutation();
   const { data, isLoading, isError, error } = useFetchMeritFavouriteQuery(
     newUser ? newUser : skipToken
   );
@@ -25,9 +27,8 @@ function Testtingfunctionpage() {
     if (state && product && !state?.find((item) => item?.id === product?.id))
       addToMeritFavourite({
         user: newUser,
-        newState: state?.find((item) => item?.id === product?.id)
-          ? state
-          : [...state, product],
+        newState: state,
+        product: product,
       });
 
     // console.log(newUser);
@@ -36,9 +37,10 @@ function Testtingfunctionpage() {
   function removeFromCart(state, product) {
     // check whether a state and product has been passed first
     if (state && product)
-      addToMeritFavourite({
+      deleteFromMeritFavourite({
         user: newUser,
-        newState: state?.filter((item) => item?.id !== product?.id),
+        newState: state,
+        product: product,
       });
   }
   console.log(data);

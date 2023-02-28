@@ -1,15 +1,5 @@
 import { createApi, fakeBaseQuery } from "@reduxjs/toolkit/query/react";
-import {
-  addDoc,
-  collection,
-  deleteDoc,
-  doc,
-  getDoc,
-  getDocs,
-  serverTimestamp,
-  setDoc,
-  updateDoc,
-} from "firebase/firestore";
+import { doc, getDoc, setDoc } from "firebase/firestore";
 import { db } from "../../../firebase/config";
 
 export const favouriteApi = createApi({
@@ -33,11 +23,39 @@ export const favouriteApi = createApi({
     }),
 
     addToMeritFavourite: builder.mutation({
-      async queryFn({ user, newState }) {
+      async queryFn({ user, newState, product }) {
         try {
-          if (user) {
+          // check that all the parameters are available and product does not exists in database
+          if (
+            user &&
+            newState &&
+            product &&
+            !newState?.find((item) => item?.id === product?.id)
+          ) {
             const favouriteRef = doc(db, "favourite", user);
-            await setDoc(favouriteRef, { items: newState });
+            await setDoc(favouriteRef, { items: [...newState, product] });
+          }
+          return { data: "ok" };
+        } catch (err) {
+          return { error: err };
+        }
+      },
+      invalidatesTags: ["Favourite"],
+    }),
+    deleteFromMeritFavourite: builder.mutation({
+      async queryFn({ user, newState, product }) {
+        try {
+          // check that all the parameters are available and product does not exists in database
+          if (
+            user &&
+            newState &&
+            product &&
+            newState?.find((item) => item?.id === product?.id)
+          ) {
+            const favouriteRef = doc(db, "favourite", user);
+            await setDoc(favouriteRef, {
+              items: newState?.filter((item) => item?.id !== product?.id),
+            });
           }
           return { data: "ok" };
         } catch (err) {
@@ -48,8 +66,11 @@ export const favouriteApi = createApi({
     }),
   }),
 });
-export const { useFetchMeritFavouriteQuery, useAddToMeritFavouriteMutation } =
-  favouriteApi;
+export const {
+  useFetchMeritFavouriteQuery,
+  useAddToMeritFavouriteMutation,
+  useDeleteFromMeritFavouriteMutation,
+} = favouriteApi;
 
 // import { createSlice } from "@reduxjs/toolkit";
 

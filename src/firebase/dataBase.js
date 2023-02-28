@@ -1,19 +1,22 @@
 import {
-  addDoc,
-  collection,
+  // addDoc,
+  // collection,
   deleteDoc,
   doc,
-  getDoc,
+  // getDoc,
   //   getDocs,
-  onSnapshot,
+  // onSnapshot,
   setDoc,
 } from "firebase/firestore";
-import { useEffect, useState } from "react";
+// import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { db } from "./config";
-import { useDispatch, useSelector } from "react-redux";
+import {
+  //  useDispatch,
+  useSelector,
+} from "react-redux";
 import { useIsUserid } from "../customHooks/UserLogInState";
-import { uploadToCart } from "../redux/features/slices/cartSlice";
+// import { uploadToCart } from "../redux/features/slices/cartSlice";
 // import { useRealtimeUserDetails } from "./auth";
 
 // export function useFetchAllProducts() {

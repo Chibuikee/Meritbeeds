@@ -14,13 +14,13 @@ import {
 function Cart() {
   const rootReducer = useSelector((state) => state?.rootReducer);
   const user = rootReducer?.authReducer;
-  const cart = rootReducer?.cartReducer;
+  // const cart = rootReducer?.cartReducer;
 
   const [cartItems, setCartItems] = useState();
   const [shouldCartStateSynchronise, setShouldCartStateSynchronise] =
     useState(false);
   const [getSetUpdateDeleteCart] = useCartSliceFN(setCartItems);
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   // synchronize the data on state and firestore database
   const [syncCartState] = useCartFirebaseUpdate(user?.userID);
   const [getCartFromFireStore] = useFetchCartFromFirebase(user?.userID);

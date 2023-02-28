@@ -6,7 +6,7 @@ export const cartSlice = createSlice({
   reducers: {
     uploadToCart: (state, action) => {
       if (action.payload) {
-        console.log(action.payload, "from upload reducer");
+        // console.log(action.payload, "from upload to cart reducer");
         return [...action.payload];
       } else {
         return state;
