@@ -1,6 +1,7 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import { setupListeners } from "@reduxjs/toolkit/dist/query";
 import authReducer from "./features/slices/authSlice";
+import { cartApi } from "./features/slices/cartApiSlice";
 import cartReducer from "./features/slices/cartSlice";
 import { meritStorApi } from "./features/slices/StoreData";
 import { favouriteApi } from "./features/slices/Wishlist";
@@ -13,11 +14,13 @@ const store = configureStore({
     rootReducer,
     [meritStorApi.reducerPath]: meritStorApi.reducer,
     [favouriteApi.reducerPath]: favouriteApi.reducer,
+    [cartApi.reducerPath]: cartApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({ serializableCheck: false }).concat(
       meritStorApi.middleware,
-      favouriteApi.middleware
+      favouriteApi.middleware,
+      cartApi.middleware
     ),
 });
 setupListeners(store.dispatch);

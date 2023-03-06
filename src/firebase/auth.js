@@ -4,7 +4,7 @@ import {
   signOut,
   onAuthStateChanged,
 } from "firebase/auth";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { auth } from "./config";
@@ -31,11 +31,18 @@ export function updateUserProfile(user) {
 export function useRealtimeUserDetails() {
   console.log("getting user authentication");
   const [idContainer, setIdContainer] = useState();
-  onAuthStateChanged(auth, (user) => {
-    if (user) {
-      setIdContainer(user);
-    }
-  });
+  useEffect(() => {
+    console.log("getting user authentication use effect ran");
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        console.log("log in ran");
+        setIdContainer(user);
+      } else {
+        setIdContainer(user);
+      }
+    });
+  }, []);
+
   return idContainer;
 }
 

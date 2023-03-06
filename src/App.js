@@ -14,7 +14,6 @@ function App() {
     <div className="App">
       <header className="App-header">
         <Navbar />
-        <h2 className="font-bold">MERITBEEDS</h2>
       </header>
       <main>
         <Routes>

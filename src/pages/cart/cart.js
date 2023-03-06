@@ -1,54 +1,23 @@
-import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-// import {
-//   useGeneralCartUpdateCart,
-//   useRemoveFromCart,
-// } from "../../firebase/dataBase";
-import {
-  useCartFirebaseUpdate,
-  useCartSliceFN,
-  useFetchCartFromFirebase,
-} from "../../customHooks/cartHooks";
+import { useSelector } from "react-redux";
+
+import { useCartHook } from "../../customHooks/cartHook";
+import { skipToken } from "@reduxjs/toolkit/dist/query";
+import { useFetchCartQuery } from "../../redux/features/slices/cartApiSlice";
 
 function Cart() {
   const rootReducer = useSelector((state) => state?.rootReducer);
   const user = rootReducer?.authReducer;
-  // const cart = rootReducer?.cartReducer;
+  const { data, isLoading } = useFetchCartQuery(
+    user?.userID ? user?.userID : skipToken
+  );
+  const [removeFromCartNow, reduceQtyInCartNow] = useCartHook();
 
-  const [cartItems, setCartItems] = useState();
-  const [shouldCartStateSynchronise, setShouldCartStateSynchronise] =
-    useState(false);
-  const [getSetUpdateDeleteCart] = useCartSliceFN(setCartItems);
-  // const dispatch = useDispatch();
-  // synchronize the data on state and firestore database
-  const [syncCartState] = useCartFirebaseUpdate(user?.userID);
-  const [getCartFromFireStore] = useFetchCartFromFirebase(user?.userID);
-
-  useEffect(() => {
-    // console.log("use effect function ran");
-    if (user) {
-      getCartFromFireStore(setCartItems);
-    }
-  }, [user?.userID]);
-  // console.log(cartItems, "whether info has been fetched");
-  console.log(cartItems, user?.userID, "cart component rendered");
-
-  useEffect(() => {
-    // the shouldCartStateSynchronise state is set to true after mount to allow synchronization
-
-    // the shouldCartStateSynchronise state is set to false on mount to prevent synchronization and is checked on mount
-    if (cartItems) {
-      setShouldCartStateSynchronise(true);
-      // syncCartState is called everytime the cartitems state is changed by the getSetUpdateDeleteCart function
-      shouldCartStateSynchronise && syncCartState(cartItems);
-    }
-  }, [cartItems]);
-
+  if (isLoading) return <h1>CART ITEMS ARE BEEN FETCHED</h1>;
   return (
     <div>
-      {cartItems ? (
-        cartItems?.map((product) => (
+      {data ? (
+        data?.map((product) => (
           <div className="" key={product.id}>
             <div className="poster flex gap-10">
               <img
@@ -65,18 +34,7 @@ function Cart() {
               </Link>
               <button
                 onClick={() => {
-                  getSetUpdateDeleteCart("reduceQtyInCart", cartItems, {
-                    id: "hello",
-                    shortDescription: "",
-                    description: "",
-                    prices: "",
-                    imageUrl: "",
-                    imageUrl1: "",
-                    imageUrl2: "",
-                    categoro: "",
-                  });
-                  // removeFromCart(product);
-                  // getProduct(user?.userID);
+                  reduceQtyInCartNow(product);
                 }}
               >
                 Remove from cart

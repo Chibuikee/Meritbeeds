@@ -10,8 +10,8 @@ export const favouriteApi = createApi({
     fetchMeritFavourite: builder.query({
       async queryFn(user) {
         try {
-          const cartRef = doc(db, "favourite", user);
-          const docSnap = await getDoc(cartRef);
+          const favouriteRef = doc(db, "favourite", user);
+          const docSnap = await getDoc(favouriteRef);
           if (docSnap.exists()) {
             return { data: docSnap.data().items };
           }

@@ -1,4 +1,3 @@
-import { createSlice } from "@reduxjs/toolkit";
 import { createApi, fakeBaseQuery } from "@reduxjs/toolkit/query/react";
 import {
   addDoc,
@@ -12,7 +11,6 @@ import {
 } from "firebase/firestore";
 import { db } from "../../../firebase/config";
 
-// const initialState = [];
 export const meritStorApi = createApi({
   reducerPath: "meritStorApi",
   baseQuery: fakeBaseQuery(),

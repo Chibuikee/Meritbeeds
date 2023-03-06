@@ -1,44 +1,67 @@
-import { onAuthStateChanged } from "firebase/auth";
+// import { onAuthStateChanged } from "firebase/auth";
 import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
-import useLogOut from "../../firebase/auth";
-import { auth } from "../../firebase/config";
-import { userIsLoggedIn } from "../../redux/features/slices/authSlice";
+import { useDispatch } from "react-redux";
+import { Link, useLocation } from "react-router-dom";
+import useLogOut, { useRealtimeUserDetails } from "../../firebase/auth";
+// import { auth } from "../../firebase/config";
+import {
+  userIsLoggedIn,
+  userIsLoggedOut,
+} from "../../redux/features/slices/authSlice";
 
 function Navbar() {
   const [userlogInState, setUserlogInState] = useState(null);
+  const idContainer = useRealtimeUserDetails();
 
-  // const rootReducer = useSelector((state) => state?.rootReducer);
-  // const user = rootReducer?.authReducer;
-  // function to log user out from firebase
-  // console.log(`the user info ${userlogInState?.userID}`);
-
+  console.log(idContainer, "from nav bar now testing");
   const logUserOut = useLogOut();
   const dispatch = useDispatch();
+  const location = useLocation();
 
   useEffect(() => {
-    onAuthStateChanged(auth, (user) => {
-      if (user) {
-        setUserlogInState(user);
-        dispatch(
-          userIsLoggedIn({
-            isLoggedIn: true,
-            email: user.email,
-            userName: user.displayName,
-            userID: user.uid,
-          })
-        );
-      } else {
-        // User is signed out
-        // dispatch(userIsLoggedOut());
-        // setUserlogInState("");
-      }
-    });
-  }, []);
+    if (idContainer) {
+      console.log("user update useeffect ran");
+      setUserlogInState(idContainer);
+      dispatch(
+        userIsLoggedIn({
+          isLoggedIn: true,
+          email: idContainer.email,
+          userName: idContainer.displayName,
+          userID: idContainer.uid,
+        })
+      );
+    } else {
+      //     // User is signed out
+      dispatch(userIsLoggedOut());
+      setUserlogInState(null);
+    }
+
+    // onAuthStateChanged(auth, (user) => {
+    //   if (user) {
+    //     setUserlogInState(user);
+    //     dispatch(
+    //       userIsLoggedIn({
+    //         isLoggedIn: true,
+    //         email: user.email,
+    //         userName: user.displayName,
+    //         userID: user.uid,
+    //       })
+    //     );
+    //   } else {
+    //     // User is signed out
+    //     // dispatch(userIsLoggedOut());
+    //     // setUserlogInState("");
+    //   }
+    // });
+  }, [idContainer]);
 
   return (
-    <nav className="sticky top-0 z-[999] w-full bg-white py-[2rem]">
+    <nav
+      className={`${
+        // remove the nav bar when it is in details page
+        location?.pathname.substring(1, 8) === "Details" ? "hidden" : "sticky"
+      } top-0 z-[999] w-full bg-white py-[2rem]`}
+    >
       <div className=" sm:w-[540px] md:w-[720px] px-3 lg:max-w-[1280px] xl:max-w-[1536px] flex flex-wrap justify-between items-center mx-auto ">
         <div className=" flex gap-5 items-center">
           <Link to="/">
@@ -61,12 +84,16 @@ function Navbar() {
 
           {userlogInState ? (
             <button
-              className="px-4 py-1 rounded bg-blue-600"
+              className="px-4 py-1 rounded bg-red-600"
               onClick={logUserOut}
             >
               Log out
             </button>
-          ) : null}
+          ) : (
+            <Link to="/Signin">
+              <button className="px-4 py-1 rounded bg-blue-600">Sign in</button>
+            </Link>
+          )}
         </div>
         {/* <div className="menu-main-ctn lg:basis-[70%] relative">
           <input type="checkbox" id="check" className="hidden" />
