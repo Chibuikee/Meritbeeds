@@ -13,7 +13,7 @@ function Navbar() {
   const [userlogInState, setUserlogInState] = useState(null);
   const idContainer = useRealtimeUserDetails();
 
-  console.log(idContainer, "from nav bar now testing");
+  // console.log(idContainer, "from nav bar now testing");
   const logUserOut = useLogOut();
   const dispatch = useDispatch();
   const location = useLocation();
@@ -59,11 +59,13 @@ function Navbar() {
     <nav
       className={`${
         // remove the nav bar when it is in details page
-        location?.pathname.substring(1, 8) === "Details" ? "hidden" : "sticky"
-      } top-0 z-[999] w-full bg-white py-[2rem]`}
+        location?.pathname.substring(1, 8) === ("Details" || "")
+          ? "hidden"
+          : "fixed"
+      } top-0 z-[999] w-[150px] h-[100vh] bg-white py-[2rem] left-0`}
     >
-      <div className=" sm:w-[540px] md:w-[720px] px-3 lg:max-w-[1280px] xl:max-w-[1536px] flex flex-wrap justify-between items-center mx-auto ">
-        <div className=" flex gap-5 items-center">
+      <div className=" sm:w-[540px] flex  justify-between items-center mx-auto ">
+        <div className=" flex flex-col gap-5 items-center ">
           <Link to="/">
             <span className=" text-xl font-semibold whitespace-nowrap ">
               Meritbeeds

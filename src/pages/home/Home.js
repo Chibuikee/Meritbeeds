@@ -1,8 +1,11 @@
 import React, { useEffect } from "react";
+import { BsSearch } from "react-icons/bs";
+
 import ProductPreview from "../../components/storeProducts";
 import { useFetchMeritStoreQuery } from "../../redux/features/slices/StoreData";
 import { useFetchCartFromFirebase } from "../../customHooks/cartHooks";
 import { useIsUserid } from "../../customHooks/UserLogInState";
+import BestAndFlashSale from "../../components/BestAndFlashSale";
 function Home() {
   const { data, isLoading } = useFetchMeritStoreQuery();
   const user = useIsUserid();
@@ -22,11 +25,20 @@ function Home() {
   if (isLoading) {
     return <h1>Its loading,Please wait!</h1>;
   }
-
+  // console.log(user);
   return (
-    <section>
-      <h1 className="text-center">Welcome Home</h1>Start shopping
-      <div className="flex">
+    <section className="ml-[150px]">
+      <div>
+        <h1 className="text-center">Hi, {user?.userName}! Welcome Back</h1>{" "}
+        <div className="flex order-3 s:order-2 mt-5 border border-solid px-5 py-2 rounded-[30px] items-center">
+          <input type="text" placeholder="Search" />
+          <BsSearch />
+        </div>
+      </div>
+      <div>
+        <BestAndFlashSale />
+      </div>
+      <div className="grid s:grid-cols-3">
         {data?.length === 0 ? (
           <p>No Product Found</p>
         ) : (

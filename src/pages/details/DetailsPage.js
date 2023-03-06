@@ -23,7 +23,7 @@ function DetailsPage() {
   useEffect(() => {
     isError && toast.error(error);
   }, [isError, error]);
-  console.log(star);
+  // console.log(star);
   if (isLoading) {
     return <h1>It`s loading, Please wait!</h1>;
   }
@@ -115,8 +115,8 @@ function DetailsPage() {
                 </span>
               </h3>
               <h3>N {data.price}</h3>
-              <div class="flex items-center gap-3">
-                <div class="rating">
+              <div className="flex items-center gap-3">
+                <div className="rating">
                   <input
                     type="radio"
                     name="rating"
@@ -132,7 +132,7 @@ function DetailsPage() {
                     id="4"
                     onClick={(e) => setStar(e.target.value)}
                   />
-                  <label for="4">☆</label>
+                  <label htmlFor="4">☆</label>
                   <input
                     type="radio"
                     name="rating"
@@ -140,7 +140,7 @@ function DetailsPage() {
                     id="3"
                     onClick={(e) => setStar(e.target.value)}
                   />
-                  <label for="3">☆</label>
+                  <label htmlFor="3">☆</label>
                   <input
                     type="radio"
                     name="rating"
@@ -148,7 +148,7 @@ function DetailsPage() {
                     id="2"
                     onClick={(e) => setStar(e.target.value)}
                   />
-                  <label for="2">☆</label>
+                  <label htmlFor="2">☆</label>
                   <input
                     type="radio"
                     name="rating"
@@ -156,7 +156,7 @@ function DetailsPage() {
                     id="1"
                     onChange={(e) => setStar(e.target.value)}
                   />
-                  <label for="1">☆</label>
+                  <label htmlFor="1">☆</label>
                 </div>{" "}
                 <span className="inline">200 Reviews</span>
               </div>
