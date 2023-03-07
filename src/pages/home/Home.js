@@ -27,7 +27,7 @@ function Home() {
   }
   // console.log(user);
   return (
-    <section className="md:left-[0px] md:pl-[150px] absolute top-0 h-[100vh] overflow-y-auto w-full">
+    <section className="md:left-[0px] s:pl-[150px] absolute top-0 h-[100vh] overflow-y-auto w-full">
       <div className="">
         <div className="flex pt-5 flex-wrap sticky top-0 bg-white items-center justify-between px-10">
           <h1 className="text-center s:text-[red]">
@@ -50,7 +50,7 @@ function Home() {
         <div>
           <BestAndFlashSale />
         </div>
-        <div className="grid s:grid-cols-[150px,150px,150px] gap-5">
+        <div className="grid grid-cols-2 s:grid-cols-3 gap-3">
           {data?.length === 0 ? (
             <p>No Product Found</p>
           ) : (

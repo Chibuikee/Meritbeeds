@@ -3,13 +3,15 @@ import React from "react";
 function BestAndFlashSale() {
   return (
     <div className="s:flex">
-      <div className="basis-[30%] px-4 pt-[100px] bg-[green]">
+      <div className="basis-[30%] px-4 pt-[100px] bg-[rgba(224,229,206,1)]">
         <h4>BEST OFFERS</h4>
-        <h1>Meritbeads Collection</h1>
+        <h1 className="font-semibold text-[28px]">Meritbeads Collection</h1>
         <p className="text-xs max-w-[200px]">
           Join and discover the best product according to your passion
         </p>
-        <button>See More</button>
+        <button className="bg-[rgba(65,84,68,1)] text-xs rounded-[25px] px-3  py-[6px]">
+          See More
+        </button>
       </div>
       <div className="s:flex basis-[50%]">
         <div className="">
