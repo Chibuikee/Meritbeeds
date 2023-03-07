@@ -15,7 +15,7 @@ function Cart() {
 
   if (isLoading) return <h1>CART ITEMS ARE BEEN FETCHED</h1>;
   return (
-    <div>
+    <div className="ml-[200px] mt-[50px]">
       {data ? (
         data?.map((product) => (
           <div className="" key={product.id}>

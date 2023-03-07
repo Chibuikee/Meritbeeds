@@ -1,6 +1,9 @@
 // import { onAuthStateChanged } from "firebase/auth";
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
+import { FaBars } from "react-icons/fa";
+import { RiCloseFill } from "react-icons/ri";
+
 import { Link, useLocation } from "react-router-dom";
 import useLogOut, { useRealtimeUserDetails } from "../../firebase/auth";
 // import { auth } from "../../firebase/config";
@@ -12,6 +15,7 @@ import {
 function Navbar() {
   const [userlogInState, setUserlogInState] = useState(null);
   const idContainer = useRealtimeUserDetails();
+  const [navBarToggle, setNavBarToggle] = useState(null);
 
   // console.log(idContainer, "from nav bar now testing");
   const logUserOut = useLogOut();
@@ -56,106 +60,76 @@ function Navbar() {
   }, [idContainer]);
 
   return (
-    <nav
-      className={`${
-        // remove the nav bar when it is in details page
-        location?.pathname.substring(1, 8) === ("Details" || "")
-          ? "hidden"
-          : "fixed"
-      } top-0 z-[999] w-[150px] h-[100vh] bg-white py-[2rem] left-0`}
-    >
-      <div className=" sm:w-[540px] flex  justify-between items-center mx-auto ">
-        <div className=" flex flex-col gap-5 items-center ">
-          <Link to="/">
-            <span className=" text-xl font-semibold whitespace-nowrap ">
-              Meritbeeds
-            </span>
-          </Link>
-          <Link to="/Adminpage">
-            <span>Admin Dashboard</span>
-          </Link>
-          <Link to="/Cart">
-            <span>CART</span>
-          </Link>
-          <Link to="/Testtingfunctionpage">
-            <span>Testing page</span>
-          </Link>
-          <h2>
-            User: <span>{userlogInState && userlogInState?.displayName}</span>
-          </h2>
-
-          {userlogInState ? (
-            <button
-              className="px-4 py-1 rounded bg-red-600"
-              onClick={logUserOut}
-            >
-              Log out
-            </button>
-          ) : (
-            <Link to="/Signin">
-              <button className="px-4 py-1 rounded bg-blue-600">Sign in</button>
-            </Link>
-          )}
+    <div>
+      {location?.pathname.substring(1, 8) !== "Details" ? (
+        <div
+          className="z-[999] relative mt-5"
+          onClick={() => setNavBarToggle(!navBarToggle)}
+        >
+          <FaBars size={25} className="navdrop-1" />
         </div>
-        {/* <div className="menu-main-ctn lg:basis-[70%] relative">
-          <input type="checkbox" id="check" className="hidden" />
-          <label
-            htmlFor="check"
-            className="navdrop-ctn"
-            onClick={() => setNavBarToggle(!navBarToggle)}
-          >
-            {navBarToggle ? (
-              <FaBars className="navdrop-2" />
-            ) : (
-              <RiCloseFill className="navdrop-2" />
-            )}
-          </label>
-
-          {
-            <div className="menu-main ">
-              <ul className="menu-sub-1-ctn basis-[70%]">
-                {NavMenuList.map(({ title, childList }, index) => (
-                  <li key={index} className="menu-item-ctn relative">
-                    <span className="menu-item-heading ">
-                      {title.name}
-                      {childList.length !== 0 && (
-                        <RiArrowDropDownLine className="DropDown" />
-                      )}
-                    </span>
-
-                    {childList.length !== 0 && (
-                      <ul className="menu-item-children-ctn absolute">
-                        {childList.map(({ url, name }, index) => (
-                          <li
-                            className="menu-item-child"
-                            // onClick={
-                            //   title.name == "PRODUCT"
-                            //     ? () => handleNavigation(name)
-                            //     : () => {}
-                            // }
-                            key={index}
-                          >
-                            <span className="capitalize">{name}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    )}
-                  </li>
-                ))}
-              </ul>
-
-              <div className="menu-sub-2-ctn basis-[18%]">
-                {NavMenuUtilityList.map((item, index) => (
-                  <span>
-                    <item.icon size={18} />
-                  </span>
-                ))}
-              </div>
+      ) : null}
+      <nav
+        className={`${
+          // remove the nav bar when it is in details page
+          location?.pathname.substring(1, 8) === "Details"
+            ? "hidden"
+            : navBarToggle
+            ? "block"
+            : "hidden s:block"
+        } top-0 z-[999] fixed  w-[150px] h-[100vh] bg-[#bb2e2e] py-[2rem] left-0`}
+      >
+        <div className=" sm:w-[540px] flex  justify-between items-center mx-auto ">
+          <div className=" flex flex-col gap-5 items-center ">
+            <div className="right-0 xxxs:right-5 top-[33px] flex ">
+              <input type="checkbox" id="check" className="hidden" />
+              <label
+                htmlFor="check"
+                className="navdrop-ctn  block md:hidden"
+                onClick={() => setNavBarToggle(!navBarToggle)}
+              >
+                {navBarToggle ? (
+                  <RiCloseFill size={25} className="navdrop-2" />
+                ) : null}
+              </label>
+              <Link to="/">
+                <span className=" text-xl font-semibold whitespace-nowrap ">
+                  Meritbeeds
+                </span>
+              </Link>
             </div>
-          }
-        </div> */}
-      </div>
-    </nav>
+
+            <Link to="/Adminpage">
+              <span>Admin Dashboard</span>
+            </Link>
+            <Link to="/Cart">
+              <span>CART</span>
+            </Link>
+            <Link to="/Testtingfunctionpage">
+              <span>Testing page</span>
+            </Link>
+            <h2>
+              User: <span>{userlogInState && userlogInState?.displayName}</span>
+            </h2>
+
+            {userlogInState ? (
+              <button
+                className="px-4 py-1 rounded bg-red-600"
+                onClick={logUserOut}
+              >
+                Log out
+              </button>
+            ) : (
+              <Link to="/Signin">
+                <button className="px-4 py-1 rounded bg-blue-600">
+                  Sign in
+                </button>
+              </Link>
+            )}
+          </div>
+        </div>
+      </nav>
+    </div>
   );
 }
 

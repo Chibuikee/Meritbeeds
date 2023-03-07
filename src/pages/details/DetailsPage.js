@@ -28,8 +28,8 @@ function DetailsPage() {
     return <h1>It`s loading, Please wait!</h1>;
   }
   return (
-    <section className="md:px-5 py-10">
-      <div className="flex justify-between px-10 items-center flex-wrap">
+    <section className="md:px-5 pb-10">
+      <div className="flex justify-between px-10 items-center flex-wrap sticky top-0 bg-[white] pt-10">
         <div className="">
           <Link to="/">
             <h1 className="font-bold"> MERITBEEDS</h1>
@@ -42,7 +42,9 @@ function DetailsPage() {
         <div className="flex gap-5 s:order-3 ">
           <BsPerson />
           <MdFavoriteBorder />
-          <BsCart3 />
+          <Link to="/Cart">
+            <BsCart3 />
+          </Link>
         </div>
       </div>
       {data && (
