@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { BsSearch, BsAlarm } from "react-icons/bs";
-
+import Cart from "../cart/cart";
 import ProductPreview from "../../components/storeProducts";
 import { useFetchMeritStoreQuery } from "../../redux/features/slices/StoreData";
 import { useFetchCartFromFirebase } from "../../customHooks/cartHooks";
@@ -27,7 +27,7 @@ function Home() {
   }
   // console.log(user);
   return (
-    <section className="md:left-[0px] s:pl-[150px] absolute top-0 h-[100vh] overflow-y-auto w-full">
+    <section className="md:left-[0px] s:pl-[150px] absolute top-5 h-[100vh] overflow-y-auto w-full">
       <div className="">
         <div className="flex pt-5 flex-wrap sticky top-0 bg-white items-center justify-between px-10">
           <h1 className="text-center s:text-[red]">
@@ -47,16 +47,21 @@ function Home() {
             <BsAlarm />
           </div>
         </div>
-        <div>
+        <div className="mt-[40px] pc:pr-[340px]">
           <BestAndFlashSale />
         </div>
-        <div className="grid grid-cols-2 s:grid-cols-3 gap-3">
+        <div className="mt-[30px] px-6 grid gap-2 grid-cols-2  xxs:grid-cols-3 s:grid-cols-2 ssm:grid-cols-3  xl:grid-cols-4 pc:pr-[340px] justify-between ">
           {data?.length === 0 ? (
             <p>No Product Found</p>
           ) : (
-            data?.map((c) => <ProductPreview key={c.id} product={c} />)
+            data?.map((c) => (
+              <ProductPreview key={c.id} product={c} className="" />
+            ))
           )}
         </div>
+      </div>
+      <div className="fixed hidden pc:block overflow-auto top-20 right-5 bottom-0 bg-[#b31d1d] w-[300px]">
+        <Cart />
       </div>
     </section>
   );

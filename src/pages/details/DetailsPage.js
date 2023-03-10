@@ -14,7 +14,7 @@ function DetailsPage() {
   const { data, isLoading, isError, error } = useFetchProductQuery(
     productId ? productId : skipToken
   );
-  const [addToCartNow, removeFromCartNow, reduceQtyInCartNow] = useCartHook();
+  const [addToCartNow, removeFromCartNow] = useCartHook();
 
   const [addToFavourite, removeFromFavourited] = useFavouriteHook();
   const [pickedBag, setPickedBag] = useState(null);

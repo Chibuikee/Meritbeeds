@@ -77,10 +77,10 @@ function Navbar() {
             : navBarToggle
             ? "block"
             : "hidden s:block"
-        } top-0 z-[999] fixed  w-[150px] h-[100vh] bg-[#bb2e2e] py-[2rem] left-0`}
+        } top-0 z-[999] fixed px-6  w-[150px] h-[100vh] bg-[#bb2e2e] py-[2rem] left-0`}
       >
         <div className="  flex  justify-between items-center mx-auto ">
-          <div className=" flex flex-col gap-5 items-center ">
+          <div className=" flex flex-col gap-5 ">
             <div className="right-0 xxxs:right-5 top-[33px] flex ">
               <input type="checkbox" id="check" className="hidden" />
               <label
@@ -100,7 +100,7 @@ function Navbar() {
             </div>
 
             <Link to="/Adminpage">
-              <span>Admin Dashboard</span>
+              <span>Dashboard</span>
             </Link>
             <Link to="/Cart">
               <span>CART</span>
