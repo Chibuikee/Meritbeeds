@@ -1,5 +1,5 @@
 import React from "react";
-
+import homeimg from "../assets/homeimg.png";
 function BestAndFlashSale() {
   return (
     <div className="pl-6 s:flex gap-[30px]">
@@ -30,11 +30,7 @@ function BestAndFlashSale() {
             Buy Now!
           </button>
         </div>
-        <img
-          src="https://images.pexels.com/photos/1152077/pexels-photo-1152077.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-          alt="Bag"
-          className="h-[164px] w-[175px]"
-        />
+        <img src={homeimg} alt="Bag" className="h-[164px] w-[175px]" />
       </div>
     </div>
   );

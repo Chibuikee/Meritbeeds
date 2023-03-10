@@ -50,7 +50,7 @@ function Home() {
         <div className="mt-[40px] pc:pr-[340px]">
           <BestAndFlashSale />
         </div>
-        <div className="mt-[30px] px-6 grid gap-2 grid-cols-2  xxs:grid-cols-3 s:grid-cols-2 ssm:grid-cols-3  xl:grid-cols-4 pc:pr-[340px] justify-between ">
+        <div className="mt-[30px] px-6 grid gap-x-2 gap-y-10 grid-cols-2 xxxs:grid-cols-3  xxs:grid-cols-3 s:grid-cols-3 ssm:grid-cols-4  xl:grid-cols-[repeat(5,_minmax(0,_170px))] pc:pr-[340px] justify-between ">
           {data?.length === 0 ? (
             <p>No Product Found</p>
           ) : (
@@ -60,7 +60,7 @@ function Home() {
           )}
         </div>
       </div>
-      <div className="fixed hidden pc:block overflow-auto top-20 right-5 bottom-0 bg-[#b31d1d] w-[300px]">
+      <div className="fixed hidden pc:block overflow-auto top-20 right-5 bottom-0 bg-[] w-[300px]">
         <Cart />
       </div>
     </section>

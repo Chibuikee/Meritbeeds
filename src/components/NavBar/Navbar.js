@@ -114,14 +114,14 @@ function Navbar() {
 
             {userlogInState ? (
               <button
-                className="px-4 py-1 rounded bg-red-600"
+                className="px-4 py-1 absolute bottom-10 rounded bg-red-600"
                 onClick={logUserOut}
               >
                 Log out
               </button>
             ) : (
               <Link to="/Signin">
-                <button className="px-4 py-1 rounded bg-blue-600">
+                <button className="absolute bottom-10 px-4 py-1 rounded bg-blue-600">
                   Sign in
                 </button>
               </Link>

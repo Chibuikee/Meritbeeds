@@ -2,8 +2,8 @@ import { Link } from "react-router-dom";
 
 export default function ProductPreview({ product }) {
   return (
-    <div className=" bg-[red] rounded-[22px]">
-      <div className="flex justify-center py-5 px-2 bg-[rgba(224,229,206,1)]">
+    <div className=" bg-[] rounded-[22px]">
+      <div className="flex justify-center rounded-[15px] py-10 px-2 bg-[rgba(224,229,206,1)]">
         <Link to={`Details/${product.id}`}>
           <img
             className="w-[150px] h-[100px]"
