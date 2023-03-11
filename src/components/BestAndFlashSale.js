@@ -2,7 +2,7 @@ import React from "react";
 import homeimg from "../assets/homeimg.png";
 function BestAndFlashSale() {
   return (
-    <div className="pl-6 s:flex gap-[30px]">
+    <div className="px-6 s:flex pc:block lg:flex gap-[30px]">
       <div className="rounded-[30px] basis-[30%] px-[22px] pb-[22px] pt-[134px] bg-[#E0E5CE]">
         <h4 className="text-[#338838] text-xs font-['Montserrat'] leading-[1.5rem] font-[700]">
           BEST OFFERS
@@ -17,20 +17,24 @@ function BestAndFlashSale() {
           See More
         </button>
       </div>
-      <div className="s:flex basis-[70%] px-[44px] pt-[66px] pb-[71px] rounded-[30px] bg-[#E7DDD1]">
+      <div className="xxxs:flex s:block md:flex lg:block llg:flex pc:mt-10 lg:mt-[initial]  mt-10 s:mt-[initial] basis-[70%] px-[44px] pt-[66px] pb-[71px] rounded-[30px] bg-[#E7DDD1]">
         <div className="">
-          <h1 className="text-[2.5rem] text-[#405242] leading-[53px] font-['Playfair_Display']">
+          <h1 className="text-[2.5rem] md:text-[clamp(1.5rem,_0.8vw_+_1.25rem,_2.5rem)] lg:text-[2.5rem] text-[#405242] leading-[53px] font-['Playfair_Display']">
             Flash Sale
           </h1>
           <h2 className="text-[2rem] mt-[16px] mb-[28px] text-[#08080A] leading-[39px]">
             75% OFF
           </h2>
 
-          <button className="bg-[#415444] my-2 text-xs font-[700] text-[#FFFFFF] tracking-[-0.005em] leading-[15px] rounded-[8px] px-8  py-4">
+          <button className="bg-[#415444] my-2 text-xs font-[700] text-[#FFFFFF] tracking-[-0.005em] leading-[15px] rounded-[8px] px-[2em]  py-4">
             Buy Now!
           </button>
         </div>
-        <img src={homeimg} alt="Bag" className="h-[164px] w-[175px]" />
+        <img
+          src={homeimg}
+          alt="Bag"
+          className="h-[164px] w-[195px] llg:w-[250px]"
+        />
       </div>
     </div>
   );

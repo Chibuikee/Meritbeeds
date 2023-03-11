@@ -23,6 +23,14 @@ code {
 @tailwind components;
 @tailwind utilities;
 
+.removescrollbar {
+  -ms-overflow-style: none; /* Internet Explorer 10+ */
+  scrollbar-width: none; /* Firefox */
+}
+.removescrollbar::-webkit-scrollbar {
+  display: none; /* Safari and Chrome */
+}
+
 .rating {
   display: flex;
   flex-direction: row-reverse;
