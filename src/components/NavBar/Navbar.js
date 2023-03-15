@@ -60,10 +60,12 @@ function Navbar() {
   }, [idContainer]);
 
   return (
-    <div>
+    // The navbar is hidden while working on the order page unhide to see
+
+    <div className="">
       {location?.pathname.substring(1, 8) !== "Details" ? (
         <div
-          className="z-[999] relative mt-5"
+          className="z-[999] relative mt-11 ml-5"
           onClick={() => setNavBarToggle(!navBarToggle)}
         >
           <FaBars size={25} className="navdrop-1" />
@@ -77,11 +79,11 @@ function Navbar() {
             : navBarToggle
             ? "block"
             : "hidden s:block"
-        } top-0 z-[999] fixed px-6  w-[150px] h-[100vh] bg-[#bb2e2e] py-[2rem] left-0`}
+        } top-0 z-[999] fixed px-6  w-[170px] h-[100vh] bg-[#bb2e2e] py-[2rem] left-0`}
       >
         <div className="  flex  justify-between items-center mx-auto ">
-          <div className=" flex flex-col gap-5 ">
-            <div className="right-0 xxxs:right-5 top-[33px] flex ">
+          <div className=" flex flex-col gap-5 mt-4">
+            <div className="mb-6 right-0 xxxs:right-5 top-[33px] flex ">
               <input type="checkbox" id="check" className="hidden" />
               <label
                 htmlFor="check"
@@ -104,6 +106,9 @@ function Navbar() {
             </Link>
             <Link to="/Cart">
               <span>CART</span>
+            </Link>
+            <Link to="/Table">
+              <span>Orders</span>
             </Link>
             <Link to="/Testtingfunctionpage">
               <span>Testing page</span>

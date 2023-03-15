@@ -27,9 +27,9 @@ function Home() {
   }
   // console.log(user);
   return (
-    <section className="md:left-[0px] s:pl-[150px] absolute top-5 h-[100vh] hover:overflow-y-auto w-full">
+    <section className="md:left-[0px] s:pl-[150px] absolute top-5 h-[100vh] hover:overflow-y-auto w-full z-10">
       <div className="">
-        <div className="flex pt-5 flex-wrap sticky top-0 bg-white items-center justify-between px-10">
+        <div className="flex pt-5 flex-wrap sticky top-0 bg-white items-center justify-between pl-14 pr-10">
           <h1 className="text-center s:text-[red]">
             Hi, {user?.userName}! Welcome Back
           </h1>
@@ -60,7 +60,7 @@ function Home() {
           )}
         </div>
       </div>
-      <div className="fixed hidden pc:block hover:overflow-auto top-20 right-5 bottom-0 bg-[] w-[300px]">
+      <div className="fixed hidden pc:block hover:overflow-auto top-20 right-5 bottom-0 bg-[] w-[300px] z-[999] ">
         <Cart />
       </div>
     </section>

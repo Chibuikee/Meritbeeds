@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 import { useCartHook } from "../../customHooks/cartHook";
 import { skipToken } from "@reduxjs/toolkit/dist/query";
 import { useFetchCartQuery } from "../../redux/features/slices/cartApiSlice";
+import { useAddToOrdersMutation } from "../../redux/features/slices/ordersSlice";
 
 function Cart() {
   const location = useLocation();
@@ -13,6 +14,7 @@ function Cart() {
   const { data, isLoading } = useFetchCartQuery(
     user?.userID ? user?.userID : skipToken
   );
+  const [addToOrders] = useAddToOrdersMutation();
   const [addToCartNow, removeFromCartNow, reduceQtyInCartNow] = useCartHook();
   const Subtotals = data?.reduce((a, c) => a + c.price * c.qty, 0);
   const FlatRate = 1500;
@@ -84,7 +86,16 @@ function Cart() {
           <h3>TOTALS</h3>
           <span>${TOTALS && TOTALS}</span>
         </div>
-        <button className="w-[70%] mx-auto block rounded-[30px] text-sm text-[#FFFFFF] px-4 py-2 bg-[#415444]">
+        <button
+          onClick={() =>
+            addToOrders({
+              data,
+              customerId: { name: user?.userName, email: user?.email },
+              status: "Unpaid",
+            })
+          }
+          className="w-[70%] mx-auto block rounded-[30px] text-sm text-[#FFFFFF] px-4 py-2 bg-[#415444]"
+        >
           Check Out
         </button>
       </div>
