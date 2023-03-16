@@ -1,5 +1,5 @@
 import { format } from "date-fns";
-import EditableCell from "../editableCell";
+import EditableCell from "./editableCell";
 
 export const tableData = [
   {
@@ -112,5 +112,129 @@ export const tableColumns = [
         ),
       },
     ],
+  },
+];
+
+export const ordersTableColumns = [
+  {
+    Header: "Profile",
+    accessor: "customerId.name",
+    Cell: ({ value }) => (
+      <div className="flex gap-2 items-center">
+        <img
+          src={"https://i.pravatar.cc/300"}
+          className="h-10 w-10"
+          alt="Customers"
+        />
+        <h1>{value}</h1>
+      </div>
+    ),
+  },
+  {
+    Header: "Email",
+    accessor: "customerId.email",
+    Cell: EditableCell,
+  },
+  {
+    Header: "Order Id",
+    accessor: "orderId",
+    Cell: EditableCell,
+  },
+  {
+    Header: "Status of Payment",
+    accessor: "status",
+    Cell: EditableCell,
+  },
+  {
+    Header: "Date",
+    accessor: "createdAt",
+    Cell: ({ value }) => {
+      return format(new Date(value.toDate()), "dd/MM/yyyy");
+    },
+  },
+  {
+    Header: "Actions",
+    Cell: ({
+      // value: initialValue,
+      row: { index, original },
+      column: { id },
+      editMode,
+      handleEdit,
+      updatedData,
+      setReadyUpdate,
+      // updateMyData,
+      updateOrders,
+    }) => {
+      const cancelReadyUpdate = () => {
+        setReadyUpdate(null);
+      };
+      return (
+        <div className="flex gap-2">
+          {index !== editMode ? (
+            // if index is not the same as editmode state allow to be set to editing mode on click
+            <button
+              className="basis-[50%] py-2 bg-[#ea00ff] mr-5"
+              onClick={() => handleEdit(index)}
+            >
+              Edit
+            </button>
+          ) : (
+            <button
+              className="basis-[50%] py-2 bg-[blue]"
+              onClick={() => {
+                // old.map((row, index) => {
+                //     if (index === rowIndex) {
+                //       return {
+                //         ...row,
+                //         [columnId]: value,
+                //       };
+                //     }
+
+                // this logs to the console
+                // readyUpdate &&
+                //   console.log({
+                //     ...original,
+                //     [readyUpdate?.id]: readyUpdate?.value,
+                //   });
+                // readyUpdate &&
+                //   updateMyData(
+                //     readyUpdate?.index,
+                //     readyUpdate?.id,
+                //     readyUpdate?.value
+                //   );
+
+                // updates the firestore datatbase
+                if (updatedData)
+                  updateOrders({
+                    productEditId: original.orderId,
+                    formData: {
+                      ...original,
+                      [updatedData?.id]: updatedData?.value,
+                    },
+                  });
+                //   reset editMode state after saving an item
+                handleEdit(null);
+                // reset the readyUpdate state after saving an item
+                cancelReadyUpdate();
+              }}
+            >
+              Save
+            </button>
+          )}
+
+          <button
+            className="basis-[50%] py-2 bg-[red]"
+            onClick={() => {
+              // reset editMode state before resetting readyUpdate state
+              handleEdit(null);
+              //   reset readyUpdate state
+              cancelReadyUpdate();
+            }}
+          >
+            Cancel
+          </button>
+        </div>
+      );
+    },
   },
 ];

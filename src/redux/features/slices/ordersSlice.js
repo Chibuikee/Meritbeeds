@@ -15,6 +15,7 @@ export const orderApi = createApi({
   reducerPath: "orderApi",
   baseQuery: fakeBaseQuery(),
   tagTypes: ["Order"],
+  refetchOnReconnect: true,
   endpoints: (builder) => ({
     fetchOrders: builder.query({
       async queryFn() {

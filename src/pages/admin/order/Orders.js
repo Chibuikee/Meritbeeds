@@ -1,16 +1,27 @@
 import React, { useState, useMemo } from "react";
-// import  { GlobalFilter } from "./globalFilter";
-
-import { useTable, useSortBy, useGlobalFilter, useFilters } from "react-table";
+import {
+  useTable,
+  useSortBy,
+  useGlobalFilter,
+  useFilters,
+  useRowState,
+} from "react-table";
+import { useUpdateOrdersMutation } from "../../../redux/features/slices/ordersSlice";
 import { ColumnFilter } from "./columnFilter";
 import { GlobalFilter } from "./globalFilter";
 // import { NavLink } from "react-router-dom";
 // import { BsHouse } from "react-icons/bs";
-import { tableData, tableColumns } from "./orderData";
-const Orders = () => {
-  const columns = useMemo(() => tableColumns, []);
-  const data = useMemo(() => tableData, []);
+
+const Orders = ({ ordersData, ordersTableColumns }) => {
+  const tableOrderData = useMemo(() => ordersData, [ordersData]);
+  const columns = useMemo(() => ordersTableColumns, []);
+  const [editMode, setEditMode] = useState(null);
+  const [updatedData, setReadyUpdate] = useState(null);
+  const [updateOrders] = useUpdateOrdersMutation();
   const defaultColumn = useMemo(() => ({ Filter: ColumnFilter }), []);
+  function handleEdit(id) {
+    setEditMode(id);
+  }
   // pagination setup
   const {
     getTableProps,
@@ -21,14 +32,24 @@ const Orders = () => {
     state,
     setGlobalFilter,
   } = useTable(
-    { columns, data, defaultColumn },
+    {
+      columns,
+      data: tableOrderData,
+      defaultColumn,
+      autoResetRowState: true,
+      editMode,
+      handleEdit,
+      updatedData,
+      setReadyUpdate,
+      updateOrders,
+    },
     useFilters,
     useGlobalFilter,
-    useSortBy
+    useSortBy,
+    useRowState
   );
-  console.log(rows, "");
   const { globalFilter } = state;
-  // GlobalFilter
+  console.log(tableOrderData);
   return (
     <>
       <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter} />
@@ -73,18 +94,12 @@ const Orders = () => {
                         background: "papayawhip",
                       }}
                     >
-                      {cell.column.Header == "Avatar" ? (
-                        <img
-                          src={`${cell.value}`}
-                          alt="user"
-                          className="h-10 w-10"
-                        />
-                      ) : (
+                      {
                         // : cell.column.Header == "Date" ? (
                         //   new Date(cell.value).toLocaleDateString()
                         // )
                         cell.render("Cell")
-                      )}
+                      }
                     </td>
                   );
                 })}

@@ -107,7 +107,7 @@ function Navbar() {
             <Link to="/Cart">
               <span>CART</span>
             </Link>
-            <Link to="/Table">
+            <Link to="/Orders">
               <span>Orders</span>
             </Link>
             <Link to="/Testtingfunctionpage">

@@ -5,9 +5,7 @@ import Registration from "./components/Registration";
 import Signin from "./components/Signin";
 import Testtingfunctionpage from "./components/testtingfunctionpage";
 import Adminpage from "./pages/admin/Adminpage";
-import CntTable from "./pages/admin/cntTable";
-import Orders from "./pages/admin/order/Orders";
-import Table from "./pages/admin/testTable";
+import CntTable from "./pages/admin/order/cntTable";
 import Cart from "./pages/cart/cart";
 import DetailsPage from "./pages/details/DetailsPage";
 import Home from "./pages/home/Home";
@@ -26,8 +24,7 @@ function App() {
           <Route path="/Registration" element={<Registration />} />
           <Route path="/Signin" element={<Signin />} />
           <Route path="/Adminpage" element={<Adminpage />} />
-          <Route path="/Orders" element={<Orders />} />
-          <Route path="/Table" element={<CntTable />} />
+          <Route path="/Orders" element={<CntTable />} />
           <Route path="/Cart" element={<Cart />} />
           <Route
             path="/Testtingfunctionpage"
