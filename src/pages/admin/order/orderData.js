@@ -1,4 +1,5 @@
 import { format } from "date-fns";
+import { ColumnFilter } from "./columnFilter";
 import EditableCell from "./editableCell";
 
 export const tableData = [
@@ -118,6 +119,7 @@ export const tableColumns = [
 export const ordersTableColumns = [
   {
     Header: "Profile",
+    disableFilters: true,
     accessor: "customerId.name",
     Cell: ({ value }) => (
       <div className="flex gap-2 items-center">
@@ -132,11 +134,13 @@ export const ordersTableColumns = [
   },
   {
     Header: "Email",
+    disableFilters: true,
     accessor: "customerId.email",
     Cell: EditableCell,
   },
   {
     Header: "Order Id",
+    disableFilters: true,
     accessor: "orderId",
     Cell: EditableCell,
   },
@@ -147,6 +151,7 @@ export const ordersTableColumns = [
   },
   {
     Header: "Date",
+    disableFilters: true,
     accessor: "createdAt",
     Cell: ({ value }) => {
       return format(new Date(value.toDate()), "dd/MM/yyyy");
@@ -154,10 +159,11 @@ export const ordersTableColumns = [
   },
   {
     Header: "Actions",
+    disableFilters: true,
     Cell: ({
       // value: initialValue,
       row: { index, original },
-      column: { id },
+      //   column: { id },
       editMode,
       handleEdit,
       updatedData,
@@ -169,7 +175,7 @@ export const ordersTableColumns = [
         setReadyUpdate(null);
       };
       return (
-        <div className="flex gap-2">
+        <div className="flex gap-1">
           {index !== editMode ? (
             // if index is not the same as editmode state allow to be set to editing mode on click
             <button

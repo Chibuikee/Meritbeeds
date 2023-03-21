@@ -27,7 +27,7 @@ const Registration = () => {
     setFormData((prev) => ({ ...prev, [name]: value }));
   }
   return (
-    <section>
+    <section className="s:ml-[200px]">
       <div>
         <form onSubmit={handleSubmit}>
           <div className="flex gap-5 p-1">

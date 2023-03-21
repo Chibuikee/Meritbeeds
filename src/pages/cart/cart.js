@@ -11,9 +11,8 @@ function Cart() {
 
   const rootReducer = useSelector((state) => state?.rootReducer);
   const user = rootReducer?.authReducer;
-  const { data, isLoading } = useFetchCartQuery(
-    user?.userID ? user?.userID : skipToken
-  );
+
+  const { data, isLoading } = useFetchCartQuery(user?.userID ?? skipToken);
   const [addToOrders] = useAddToOrdersMutation();
   const [addToCartNow, removeFromCartNow, reduceQtyInCartNow] = useCartHook();
   const Subtotals = data?.reduce((a, c) => a + c.price * c.qty, 0);
@@ -22,6 +21,7 @@ function Cart() {
   const TOTALS = FlatRate + Subtotals;
   // console.log(data);
   if (isLoading) return <h1>CART ITEMS ARE BEEN FETCHED</h1>;
+  console.log(data);
   return (
     <div
       className={`mt-[50px] bg-[#f8f4f4] px-5 ${
@@ -29,10 +29,10 @@ function Cart() {
       }`}
     >
       {data ? (
-        data?.map((product) => (
+        data?.map((product, key) => (
           <div
             className="w-full h-[150px] mt-2 bg-[] items-center flex gap-5"
-            key={product.id}
+            key={key}
           >
             <div className="h-full flex justify-center items-center py-3 bg-[#e4e4e4] basis-[110px]">
               <img

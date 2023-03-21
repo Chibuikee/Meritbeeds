@@ -116,7 +116,13 @@ function Navbar() {
             <h2>
               User: <span>{userlogInState && userlogInState?.displayName}</span>
             </h2>
-
+            {userlogInState?.displayName && (
+              <Link to="/Registration">
+                <button className=" px-4 py-1 rounded bg-blue-600">
+                  Sign Up
+                </button>
+              </Link>
+            )}
             {userlogInState ? (
               <button
                 className="px-4 py-1 absolute bottom-10 rounded bg-red-600"
