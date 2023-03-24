@@ -22,6 +22,7 @@ const Signin = () => {
     signInWithPopup(auth, provider)
       .then((result) => {
         // const user = result.user;
+
         toast("Sign in succesful");
         navigate("/Adminpage");
       })
@@ -42,7 +43,7 @@ const Signin = () => {
       .then((userCredential) => {
         // Signed in
         const user = userCredential.user;
-        // console.log(user.email);
+        // console.log(user);
         toast(`${user.email}`);
         navigate("/Adminpage");
         // ...

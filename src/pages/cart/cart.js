@@ -90,7 +90,7 @@ function Cart() {
           onClick={() =>
             addToOrders({
               data,
-              customerId: { name: user?.userName, email: user?.email },
+              userId: { name: user?.userName, email: user?.email },
               status: "Unpaid",
             })
           }

@@ -21,7 +21,7 @@ function Home() {
       call();
     }
   }, [user?.userID]);
-
+  // console.log(user, "it works");
   if (isLoading) {
     return <h1>Its loading,Please wait!</h1>;
   }

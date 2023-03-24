@@ -110,6 +110,9 @@ function Navbar() {
             <Link to="/Orders">
               <span>Orders</span>
             </Link>
+            <Link to="/Users">
+              <span>Users</span>
+            </Link>
             <Link to="/Testtingfunctionpage">
               <span>Testing page</span>
             </Link>

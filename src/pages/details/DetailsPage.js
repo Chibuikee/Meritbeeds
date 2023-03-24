@@ -126,7 +126,7 @@ function DetailsPage() {
                     id="5"
                     onClick={(e) => setStar(e.target.value)}
                   />
-                  <label for="5">☆</label>
+                  <label htmlFor="5">☆</label>
                   <input
                     type="radio"
                     name="rating"

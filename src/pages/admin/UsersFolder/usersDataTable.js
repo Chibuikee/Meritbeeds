@@ -1,6 +1,6 @@
 import { format } from "date-fns";
-import { ColumnFilter } from "./columnFilter";
-import EditableCell from "./editableCell";
+import EditableCell from "../order/editableCell";
+// import { ColumnFilter } from "./columnFilter";
 
 export const tableData = [
   {
@@ -116,43 +116,55 @@ export const tableColumns = [
   },
 ];
 
-export const ordersTableColumns = [
+export const usersTableColumns = [
   {
-    Header: "Profile",
+    Header: "Picture",
     disableFilters: true,
-    accessor: "userId.name",
+    accessor: "userInfo.photoURL",
     Cell: ({ value }) => (
       <div className="flex gap-2 items-center">
         <img
-          src={"https://i.pravatar.cc/300"}
+          src={value ? value : "https://i.pravatar.cc/300"}
           className="h-10 w-10"
           alt="Customers"
         />
-        <h1>{value}</h1>
+        {/* <h1>{value}</h1> */}
       </div>
     ),
   },
   {
+    Header: "First Name",
+    disableFilters: true,
+    accessor: "userInfo.fname",
+    Cell: EditableCell,
+  },
+  {
+    Header: "Last Name",
+    disableFilters: true,
+    accessor: "userInfo.lname",
+    Cell: EditableCell,
+  },
+  {
     Header: "Email",
     disableFilters: true,
-    accessor: "userId.email",
+    accessor: "userInfo.email",
     Cell: EditableCell,
   },
   {
-    Header: "Order Id",
+    Header: "User Id",
     disableFilters: true,
-    accessor: "orderId",
+    accessor: "creationId",
     Cell: EditableCell,
   },
-  {
-    Header: "Status of Payment",
-    accessor: "status",
-    Cell: EditableCell,
-  },
+  // {
+  //   Header: "Status of Payment",
+  //   accessor: "status",
+  //   Cell: EditableCell,
+  // },
   {
     Header: "Date",
     disableFilters: true,
-    accessor: "createdAt",
+    accessor: "userInfo.createdAt",
     Cell: ({ value }) => {
       return format(new Date(value.toDate()), "dd/MM/yyyy");
     },

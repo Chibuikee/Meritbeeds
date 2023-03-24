@@ -7,6 +7,7 @@ import {
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { useAddToUsersMutation } from "../redux/features/slices/userSlice";
 import { auth } from "./config";
 
 export function updateUserProfile(user) {
@@ -49,13 +50,23 @@ export function useRealtimeUserDetails() {
 export function UseCreateNewUser() {
   // put this in a hook because usenavigate can only be called in a hook or react function
   const navigate = useNavigate();
+  const [addToUsers] = useAddToUsersMutation();
+
   function CreateNewUser(auth, email, password, username) {
     createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         updateUserProfile(username); // Signed in
-        const user = userCredential.user;
-        // ...
-        toast(user);
+        const { email, uid, photoURL, phoneNumber } = userCredential.user;
+        // console.log(userCredential.user);
+        addToUsers({
+          fname: username.substring(0, username.indexOf(" ")),
+          lname: username.substring(username.lastIndexOf(" ") + 1),
+          email: email,
+          userId: uid,
+          image: photoURL,
+          phoneNumber: phoneNumber,
+        });
+        // toast(user);
         toast("Sign up successful");
         navigate("/Signin");
       })

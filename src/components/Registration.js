@@ -1,10 +1,14 @@
 import React, { useState } from "react";
 import { toast } from "react-toastify";
-import { auth } from "../firebase/config";
+import { auth, provider } from "../firebase/config";
 import { UseCreateNewUser } from "../firebase/auth";
 import PasswordReset from "./Reset";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
+import { signInWithPopup } from "firebase/auth";
+import { useAddToUsersMutation } from "../redux/features/slices/userSlice";
 const Registration = () => {
+  const [addToUsers] = useAddToUsersMutation();
+
   const InitiaState = {
     // createdAt: Timestamp.now().toDate(),
     name: "",
@@ -26,6 +30,32 @@ const Registration = () => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   }
+  //   google authuentication
+  function handleGoogleSignup() {
+    signInWithPopup(auth, provider)
+      .then((result) => {
+        const { email, uid, photoURL, phoneNumber, displayName } = result.user;
+        // console.log(result.user);
+        addToUsers({
+          fname: displayName.substring(0, displayName.indexOf(" ")),
+          lname: displayName.substring(displayName.lastIndexOf(" ") + 1),
+          email: email,
+          userId: uid,
+          photoURL: photoURL,
+          phoneNumber: phoneNumber,
+        });
+        toast("Sign up succesful");
+        Navigate("/Signin");
+      })
+      .catch((error) => {
+        // Handle Errors here.
+
+        const errorMessage = error.message;
+        toast.error(`Sign up unsuccessful`);
+        // The email of the user's account used.
+        // const email = error.customData.email;
+      });
+  }
   return (
     <section className="s:ml-[200px]">
       <div>
@@ -37,7 +67,7 @@ const Registration = () => {
               name="name"
               value={formValue.name}
               onChange={handleChange}
-              placeholder="Full name"
+              placeholder="First and last name"
             />
           </div>
           <div className="flex gap-5 p-1">
@@ -78,6 +108,12 @@ const Registration = () => {
           </Link>
         </form>
         <PasswordReset />
+        <button
+          className="rounded px-4 py-2 bg-[green]"
+          onClick={handleGoogleSignup}
+        >
+          Sign up with google
+        </button>
       </div>
     </section>
   );
