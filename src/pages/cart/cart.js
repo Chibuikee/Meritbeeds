@@ -21,7 +21,7 @@ function Cart() {
   const TOTALS = FlatRate + Subtotals;
   // console.log(data);
   if (isLoading) return <h1>CART ITEMS ARE BEEN FETCHED</h1>;
-  console.log(data);
+  // console.log(user, "checking cart auth");
   return (
     <div
       className={`mt-[50px] bg-[#f8f4f4] px-5 ${

@@ -18,13 +18,13 @@ export function useCartHook() {
   useEffect(() => {
     setState(user);
   }, [user]);
-
+  console.log(data, "from cart testing");
   function addToCartNow(product) {
     // check whether a state and product has been passed first and
-    if (data && product)
+    if (product)
       addToCart({
         user: newUser,
-        newState: data,
+        newState: data ?? [],
         product: product,
       });
   }

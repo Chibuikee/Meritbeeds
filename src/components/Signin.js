@@ -60,7 +60,7 @@ const Signin = () => {
     setFormData((prev) => ({ ...prev, [name]: value }));
   }
   return (
-    <>
+    <section className="md:ml-[200px]">
       <form onSubmit={handleSubmit}>
         <label>
           Email:
@@ -96,7 +96,7 @@ const Signin = () => {
           </button>
         </div>
       </form>
-    </>
+    </section>
   );
 };
 
