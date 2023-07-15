@@ -92,7 +92,7 @@ function Updateprofile() {
   }
   if (isLoading) return <h1>Please wait data is being fetched</h1>;
   return (
-    <div>
+    <div className="s:ml-[200px]">
       {formData && (
         <form onSubmit={updateUserProfile}>
           <div className="flex gap-5 p-1">

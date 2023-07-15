@@ -13,11 +13,11 @@ export default function ProductPreview({ product }) {
         </Link>
       </div>
       <div className="preview">
-        <h3>{product.productTitle}</h3>
+        <h3 className="truncate">{product.productTitle}</h3>
         {/* <h3>{product.shortDescription}</h3> */}
         <h3>{product.price}</h3>
         <Link to={`Details/${product.id}`}>
-          <button>Details of product</button>
+          <button className="">Details</button>
         </Link>
       </div>
     </div>

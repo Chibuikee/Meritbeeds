@@ -40,8 +40,12 @@ function DetailsPage() {
           <BsSearch />
         </div>
         <div className="flex gap-5 s:order-3 ">
-          <BsPerson />
-          <MdFavoriteBorder />
+          <Link to="/Updateprofile">
+            <BsPerson />
+          </Link>
+          <Link to="/">
+            <MdFavoriteBorder />
+          </Link>
           <Link to="/Cart">
             <BsCart3 />
           </Link>
@@ -54,7 +58,7 @@ function DetailsPage() {
               <div className="poster">
                 <img
                   className="w-full h-[250px]"
-                  src={pickedBag}
+                  src={pickedBag?.url}
                   alt="product"
                 />
               </div>
@@ -67,32 +71,50 @@ function DetailsPage() {
                 />
               </div>
             )}
-            <div className="flex gap-5 ">
-              <div className="poster">
+            <div className="flex gap-5 justify-center ">
+              <div
+                className={`poster ${
+                  pickedBag?.name == "imageUrl" && "border"
+                } border-solid border-[red]`}
+              >
                 <img
                   className="w-[50px] h-[50px]"
                   src={data.imageUrl}
                   alt="product"
-                  onClick={() => setPickedBag(data.imageUrl)}
+                  onClick={() =>
+                    setPickedBag({ url: data.imageUrl, name: "imageUrl" })
+                  }
                 />
               </div>
-              <div className="poster">
+              <div
+                className={`poster ${
+                  pickedBag?.name == "imageUrl1" && "border"
+                } border-solid border-[red]`}
+              >
                 {data.imageUrl1 && (
                   <img
                     className="w-[50px] h-[50px]"
                     src={data.imageUrl1}
                     alt="product"
-                    onClick={() => setPickedBag(data.imageUrl1)}
+                    onClick={() =>
+                      setPickedBag({ url: data.imageUrl1, name: "imageUrl1" })
+                    }
                   />
                 )}
               </div>
-              <div className="poster">
+              <div
+                className={`poster ${
+                  pickedBag?.name == "imageUrl2" && "border"
+                } border-solid border-[red]`}
+              >
                 {data.imageUrl2 && (
                   <img
                     className="w-[50px] h-[50px]"
                     src={data.imageUrl2}
                     alt="product"
-                    onClick={() => setPickedBag(data.imageUrl2)}
+                    onClick={() =>
+                      setPickedBag({ url: data.imageUrl2, name: "imageUrl2" })
+                    }
                   />
                 )}
               </div>
@@ -171,9 +193,9 @@ function DetailsPage() {
                 </div>
               </div>
             </div>
-            <div>
+            <div className=" my-5">
               <button
-                className="bg-[blue] px-4 py-2 rounded-[8px]"
+                className="bg-[blue] px-4 py-1 rounded-[8px] mr-2"
                 onClick={() => {
                   addToCartNow({
                     ...data,
@@ -184,7 +206,7 @@ function DetailsPage() {
                 Add to cart
               </button>
               <button
-                className="bg-[red] px-4 py-2 rounded-[8px]"
+                className="bg-[red] px-4 py-1 rounded-[8px]"
                 onClick={() => {
                   removeFromCartNow({
                     id: productId,
@@ -194,9 +216,9 @@ function DetailsPage() {
                 Remove from cart
               </button>
             </div>
-            <div className="flex gap-10">
+            <div className="">
               <button
-                className="bg-[blue] px-4 py-2 rounded-[8px]"
+                className="bg-[blue] px-4 py-1 rounded-[8px] mr-2"
                 onClick={() =>
                   addToFavourite({
                     ...data,
@@ -207,7 +229,7 @@ function DetailsPage() {
                 favourite
               </button>
               <button
-                className="bg-[red] px-4 py-2 rounded-[8px]"
+                className="bg-[red] px-4 py-1 rounded-[8px]"
                 onClick={() =>
                   removeFromFavourited({
                     id: productId,

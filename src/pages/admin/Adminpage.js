@@ -12,9 +12,9 @@ function Adminpage() {
   return (
     <section>
       <div>
-        <div className="">
-          <h1>Pelumi</h1>Welcome to the Admin dashboard. You can manage your
-          store from this page.
+        <div className="pl-5">
+          <h1 className="">Pelumi</h1>Welcome to the Admin dashboard. You can
+          manage your store from this page.
         </div>
         <ItemsUpload />
 

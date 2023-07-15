@@ -33,7 +33,7 @@ function App() {
             path="/Testtingfunctionpage"
             element={<Testtingfunctionpage />}
           /> */}
-          <Route path="/Testtingfunctionpage" element={<Updateprofile />} />
+          <Route path="/Updateprofile" element={<Updateprofile />} />
         </Routes>
       </main>
     </div>

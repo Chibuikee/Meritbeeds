@@ -33,11 +33,11 @@ function Home() {
           <h1 className="text-center s:text-[red]">
             Hi, {user?.userName}! Welcome Back
           </h1>
-          <div className="flex order-3 pc:order-2 w-full md:w-[initial] border border-solid px-5 py-2 rounded-[30px] items-center">
+          <div className="flex justify-between mt-5 order-3 pc:order-2 w-full md:w-[initial] border border-solid px-5 py-2 rounded-[30px] items-center">
             <input type="text" placeholder="Search" />
-            <BsSearch />
+            <BsSearch className="" />
           </div>
-          <div className="flex pc:order-3 items-center gap-5">
+          <div className="flex mt-3 pc:order-3 items-center gap-5">
             <img
               src="https://cdn.vanguardngr.com/wp-content/uploads/2019/12/Chibuike-Rotimi-Amaechi.jpg"
               className="h-[30px] w-[35px] rounded-full"
