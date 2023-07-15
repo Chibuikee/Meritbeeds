@@ -150,12 +150,12 @@ export const usersTableColumns = [
     accessor: "userInfo.email",
     Cell: EditableCell,
   },
-  {
-    Header: "User Id",
-    disableFilters: true,
-    accessor: "creationId",
-    Cell: EditableCell,
-  },
+  // {
+  //   Header: "User Id",
+  //   disableFilters: true,
+  //   accessor: "creationId",
+  //   Cell: EditableCell,
+  // },
   // {
   //   Header: "Status of Payment",
   //   accessor: "status",
