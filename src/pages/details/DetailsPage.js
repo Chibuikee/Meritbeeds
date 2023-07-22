@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { BsPerson, BsCart3, BsSearch, BsTruck } from "react-icons/bs";
+import { RiArrowRightSLine } from "react-icons/ri";
 import { MdFavoriteBorder } from "react-icons/md";
 import { FcHome } from "react-icons/fc";
 import { toast } from "react-toastify";
@@ -132,8 +133,8 @@ function DetailsPage() {
                   />
                 </h3>
               </div>
-              <h3 className="mt-16">{data.category}</h3>
-              <h3 className="text-xs text-[purple]">{data.description}</h3>
+              <h3 className="mt-16 font-medium">{data.category}</h3>
+              <h3 className="text-xs text-[black]">{data.description}</h3>
               <h3>
                 Release Date:
                 <span className="ml-5 text-xs">
@@ -199,7 +200,7 @@ function DetailsPage() {
             </div>
             <div className=" my-5 flex w-full text-sm">
               <button
-                className="bg-[black] text-[white] px-4 py-1 rounded-[8px] mr-2"
+                className="bg-[black] text-[white] px-4 py-1 mr-2"
                 onClick={() => {
                   addToCartNow({
                     ...data,
@@ -210,7 +211,7 @@ function DetailsPage() {
                 Add to cart
               </button>
               <button
-                className="bg-[white] text-[black] px-4 py-1 rounded-[8px] border-[1px] mr-2 border-[black]"
+                className="bg-[white] text-[black] px-4 py-1  border-[1px] mr-2 border-[black]"
                 onClick={() =>
                   addToFavourite({
                     ...data,
@@ -262,15 +263,16 @@ function DetailsPage() {
               <h3 className=" ">To delivered between</h3>
               <h4>July 10th - July 17th</h4>
             </div>
-            <div className="h-[0.5px] w-[100%] bg-[#423e3e] my-3"></div>
+            <div className="h-[0.5px] ml-[50px] w-[70%] bg-[#423e3e4d] my-3"></div>
             <div className="pl-[50px] relative text-sm  ">
               <FcHome
                 size={20}
                 className=" text-[#4e245f] absolute top-0 my-auto bottom-0  left-0"
               />
-              <h3 className=" ">
-                Home delivery <span>--N1,500</span>
-              </h3>
+              <div className="flex justify-between">
+                <span> Home delivery --N1,500</span>
+                <RiArrowRightSLine size={20} />
+              </div>
             </div>
           </div>
         </div>
