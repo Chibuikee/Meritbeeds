@@ -60,7 +60,7 @@ const Users = ({ usersData, usersTableColumns }) => {
     useRowState
   );
   const { globalFilter, pageIndex, pageSize } = state;
-  console.log(pageOptions);
+  // console.log(pageOptions);
   return (
     <>
       <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter} />

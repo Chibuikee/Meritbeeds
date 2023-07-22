@@ -11,8 +11,11 @@ import AllCustomers from "./pages/admin/UsersFolder/usersctn";
 import Cart from "./pages/cart/cart";
 import DetailsPage from "./pages/details/DetailsPage";
 import Home from "./pages/home/Home";
+import { useIsUserid } from "./customHooks/UserLogInState";
 
 function App() {
+  const user = useIsUserid();
+  console.log("checking", user?.userID);
   return (
     <div className="App">
       <header className="App-header">
@@ -22,18 +25,24 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="Details/:productId" element={<DetailsPage />} />
-          <Route path="EditProduct/:productEditId" element={<Editproduct />} />
+          <Route
+            path="EditProduct/:productEditId"
+            element={user?.userID && <Editproduct />}
+          />
           <Route path="/Registration" element={<Registration />} />
           <Route path="/Signin" element={<Signin />} />
-          <Route path="/Adminpage" element={<Adminpage />} />
-          <Route path="/Users" element={<AllCustomers />} />
-          <Route path="/Orders" element={<CntTable />} />
+          <Route path="/Adminpage" element={user?.userID && <Adminpage />} />
+          <Route path="/Users" element={user?.userID && <AllCustomers />} />
+          <Route path="/Orders" element={user?.userID && <CntTable />} />
           <Route path="/Cart" element={<Cart />} />
           {/* <Route
             path="/Testtingfunctionpage"
             element={<Testtingfunctionpage />}
           /> */}
-          <Route path="/Updateprofile" element={<Updateprofile />} />
+          <Route
+            path="/Updateprofile"
+            element={user?.userID && <Updateprofile />}
+          />
         </Routes>
       </main>
     </div>

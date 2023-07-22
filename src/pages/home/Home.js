@@ -6,6 +6,8 @@ import { useFetchMeritStoreQuery } from "../../redux/features/slices/StoreData";
 import { useFetchCartFromFirebase } from "../../customHooks/cartHooks";
 import { useIsUserid } from "../../customHooks/UserLogInState";
 import BestAndFlashSale from "../../components/BestAndFlashSale";
+import { Link } from "react-router-dom";
+import LoadingSpinner from "../../components/LoadingSpinner";
 function Home() {
   const { data, isLoading } = useFetchMeritStoreQuery();
   const user = useIsUserid();
@@ -22,9 +24,7 @@ function Home() {
     }
   }, [user?.userID]);
   // console.log(user, "it works");
-  if (isLoading) {
-    return <h1>Its loading,Please wait!</h1>;
-  }
+  if (isLoading) return <LoadingSpinner />;
   // console.log(user);
   return (
     <section className="md:left-[0px] s:pl-[150px] absolute top-5 h-[100vh] hover:overflow-y-auto w-full z-10">
@@ -43,7 +43,9 @@ function Home() {
               className="h-[30px] w-[35px] rounded-full"
               alt="user"
             />
-            <h1 className="truncate">{user?.userName}</h1>
+            <Link to="/Updateprofile">
+              <h1 className="truncate">{user?.userName}</h1>
+            </Link>
             <BsAlarm />
           </div>
         </div>

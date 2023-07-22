@@ -10,6 +10,8 @@ import {
   useUpdateUsersMutation,
 } from "../redux/features/slices/userSlice";
 // import { useFetchUsersQuery } from "../redux/features/slices/userSlice";
+import { BsTelephone } from "react-icons/bs";
+import LoadingSpinner from "./LoadingSpinner";
 
 function Updateprofile() {
   const user = useSelector((state) => state?.rootReducer.authReducer.userID);
@@ -17,12 +19,12 @@ function Updateprofile() {
   const { data, isLoading } = useFetchUserQuery(user ?? skipToken);
   const [updateUsers] = useUpdateUsersMutation();
   //   console.log(data);
-  //   const InitiaState = {
-  //     displayName: "",
-  //     photoURL: "",
-  //     phoneNumber: "",
-  //   };
-  const [formData, setFormData] = useState(null);
+  const InitiaState = {
+    displayName: "",
+    photoURL: "",
+    phoneNumber: "",
+  };
+  const [formData, setFormData] = useState(InitiaState);
   const [file, setFile] = useState(null);
   const [Progress, setProgress] = useState(0);
   const upLoadfile = useUpLoadfile(setFormData, setProgress, file);
@@ -90,48 +92,102 @@ function Updateprofile() {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   }
-  if (isLoading) return <h1>Please wait data is being fetched</h1>;
+  if (isLoading) return <LoadingSpinner />;
   return (
-    <div className="s:ml-[200px]">
+    <div className="s:ml-[200px] flex flex-col items-center h-full pt-6 sm:justify-center sm:pt-0 ">
       {formData && (
-        <form onSubmit={updateUserProfile}>
-          <div className="flex gap-5 p-1">
-            <label>Full Name:</label>
+        <form
+          className="w-full px-6 py-4 mt-6 overflow-hidden bg-white shadow-md sm:max-w-lg sm:rounded-lg"
+          onSubmit={updateUserProfile}
+        >
+          <label
+            for="website-user"
+            className="mt-4 block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+          >
+            Username
+          </label>
+          <div className="flex">
+            <span className="inline-flex items-center px-3 text-sm text-gray-900 bg-gray-200 border border-r-0 border-gray-300 rounded-l-md dark:bg-gray-600 dark:text-gray-400 dark:border-gray-600">
+              <svg
+                className="w-4 h-4 text-gray-500 dark:text-gray-400"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="currentColor"
+                viewBox="0 0 20 20"
+              >
+                <path d="M10 0a10 10 0 1 0 10 10A10.011 10.011 0 0 0 10 0Zm0 5a3 3 0 1 1 0 6 3 3 0 0 1 0-6Zm0 13a8.949 8.949 0 0 1-4.951-1.488A3.987 3.987 0 0 1 9 13h2a3.987 3.987 0 0 1 3.951 3.512A8.949 8.949 0 0 1 10 18Z" />
+              </svg>
+            </span>
             <input
               type="text"
               name="displayName"
               value={formData.displayName}
               onChange={handleChange}
-              placeholder="First and last name"
+              placeholder="Francisca Green"
+              id="website-user"
+              className="rounded-none rounded-r-lg bg-gray-50 border border-gray-300 text-gray-900 focus:ring-blue-500 focus:border-blue-500 block flex-1 min-w-0 w-full text-sm p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             />
           </div>
-          <div className="p-1">
-            <label>Display pic:</label>
-            <input
-              className="my-2 w-full rounded block border-solid border border-[red]"
-              type="file"
-              name="photoURL"
-              accept="image/*"
-              onChange={handleImageChange}
-              ref={imageInputElement}
-            />
+
+          <label
+            className="mt-4 block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+            for="user_avatar"
+          >
+            Upload Photo
+          </label>
+          <input
+            name="photoURL"
+            accept="image/*"
+            onChange={handleImageChange}
+            ref={imageInputElement}
+            className="block w-full flex-1 text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer p-2.5 bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
+            aria-describedby="user_avatar_help"
+            id="user_avatar"
+            type="file"
+          />
+          <div
+            className="mt-1 text-sm text-gray-500 dark:text-gray-300"
+            id="user_avatar_help"
+          >
+            A profile picture is useful to confirm your are logged into your
+            account
           </div>
-          <div className="flex gap-5 p-1">
-            <label>Phone Number:</label>
+
+          <label
+            for="website-phone"
+            class="mt-4 block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+          >
+            Phone
+          </label>
+          <div className="flex">
+            <span className="inline-flex items-center px-3 text-sm text-gray-900 bg-gray-200 border border-r-0 border-gray-300 rounded-l-md dark:bg-gray-600 dark:text-gray-400 dark:border-gray-600">
+              <BsTelephone className="w-4 h-4 text-gray-500 dark:text-gray-400" />
+            </span>
             <input
               type="text"
               name="phoneNumber"
               value={formData.phoneNumber ?? "Input your Number"}
               onChange={handleChange}
               placeholder="Input your Number"
+              id="website-phone"
+              className="rounded-none rounded-r-lg bg-gray-50 border border-gray-300 text-gray-900 focus:ring-blue-500 focus:border-blue-500 block flex-1 min-w-0 w-full text-sm p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             />
           </div>
 
-          <button className="bg-[purple] px-2 py-1" type="submit">
-            Update
+          <button
+            disabled={Progress !== "100" ? true : false}
+            type="submit"
+            className={`mt-4 text-white bg-blue-700 hover:bg-blue-800 ${
+              Progress !== "100" ? "cursor-not-allowed" : ""
+            } focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800`}
+          >
+            Update <span className=" px-1  py-1">{Progress}</span>
           </button>
-
-          <button className="bg-[green] px-2  py-1">{Progress}</button>
+          {/* <div className="w-full bg-gray-200 rounded-full h-1.5 mb-4 dark:bg-gray-700">
+            <div
+              className={`bg-blue-600 h-1.5 rounded-full dark:bg-blue-500 w-[${Progress}%]`}
+            ></div>
+          </div> */}
         </form>
       )}
     </div>

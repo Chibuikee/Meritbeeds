@@ -2,12 +2,12 @@ import React from "react";
 import { useFetchUsersQuery } from "../../../redux/features/slices/userSlice";
 import Users from "./users";
 import { usersTableColumns } from "./usersDataTable";
+import LoadingSpinner from "../../../components/LoadingSpinner";
 
 function AllUsers() {
   const { data: usersData, isLoading } = useFetchUsersQuery();
-  if (isLoading)
-    return <h1 className="text-center">Loading, please wait a moment</h1>;
-  console.log(usersData);
+  if (isLoading) return <LoadingSpinner />;
+  // console.log(usersData);
   return (
     <div className="overflow-x-auto s:ml-[200px] relative">
       <Users usersData={usersData} usersTableColumns={usersTableColumns} />

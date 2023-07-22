@@ -8,6 +8,7 @@ import { skipToken } from "@reduxjs/toolkit/dist/query";
 import { useFetchProductQuery } from "../../redux/features/slices/StoreData";
 import { useFavouriteHook } from "../../customHooks/favouritedHooks";
 import { useCartHook } from "../../customHooks/cartHook";
+import LoadingSpinner from "../../components/LoadingSpinner";
 
 function DetailsPage() {
   const { productId } = useParams();
@@ -24,9 +25,7 @@ function DetailsPage() {
     isError && toast.error(error);
   }, [isError, error]);
   // console.log(star);
-  if (isLoading) {
-    return <h1>It`s loading, Please wait!</h1>;
-  }
+  if (isLoading) return <LoadingSpinner />;
   return (
     <section className="md:px-5 pb-10">
       <div className="flex justify-between px-10 items-center flex-wrap sticky top-0 bg-[white] pt-10">

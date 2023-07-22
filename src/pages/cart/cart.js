@@ -5,6 +5,7 @@ import { useCartHook } from "../../customHooks/cartHook";
 import { skipToken } from "@reduxjs/toolkit/dist/query";
 import { useFetchCartQuery } from "../../redux/features/slices/cartApiSlice";
 import { useAddToOrdersMutation } from "../../redux/features/slices/ordersSlice";
+import LoadingSpinner from "../../components/LoadingSpinner";
 
 function Cart() {
   const location = useLocation();
@@ -20,7 +21,7 @@ function Cart() {
   // const destination = [];
   const TOTALS = FlatRate + Subtotals;
   // console.log(data);
-  if (isLoading) return <h1>CART ITEMS ARE BEEN FETCHED</h1>;
+  if (isLoading) return <LoadingSpinner />;
   // console.log(user, "checking cart auth");
   return (
     <div
