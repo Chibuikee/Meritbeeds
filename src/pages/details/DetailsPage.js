@@ -27,14 +27,14 @@ function DetailsPage() {
   // console.log(star);
   if (isLoading) return <LoadingSpinner />;
   return (
-    <section className="md:px-5 pb-10">
+    <section className="md:px-5 pb-10 font-satoshi">
       <div className="flex justify-between px-10 items-center flex-wrap sticky top-0 bg-[white] pt-10">
         <div className="">
           <Link to="/">
             <h1 className="font-bold"> MERITBEEDS</h1>
           </Link>
         </div>
-        <div className="flex order-3 s:order-2 mt-5 border border-solid px-5 py-2 rounded-[30px] items-center">
+        <div className="flex order-3 s:order-2 mt-5 xs:mt-[0px]  border border-solid px-5 py-2 rounded-[30px] items-center">
           <input type="text" placeholder="Search" />
           <BsSearch />
         </div>
@@ -123,21 +123,24 @@ function DetailsPage() {
 
           <div className="basis-[45%] px-5">
             <div className="details">
-              <div className="flex items-center gap-10">
-                <h3 className="text-[20px] font-semibold md:text-[36px]">
-                  {data.productTitle}
+              <div className="flex items-center relative gap-10">
+                <h3 className="text-[20px] absolute left-0 top-0 font-semibold md:text-[36px]">
+                  {data.productTitle}{" "}
+                  <MdFavoriteBorder
+                    size={25}
+                    className="inline absolute right-[-40px] top-[4px] s:top-[18px]  text-[red]"
+                  />
                 </h3>
-                <MdFavoriteBorder size={40} className="pt-3 text-[red]" />
               </div>
-              <h3>{data.category}</h3>
+              <h3 className="mt-16">{data.category}</h3>
               <h3 className="text-xs text-[purple]">{data.description}</h3>
               <h3>
                 Release Date:
-                <span className="ml-5">
+                <span className="ml-5 text-xs">
                   {data.createdAt.toDate().toLocaleString()}
                 </span>
               </h3>
-              <h3>N {data.price}</h3>
+              <h3 className="mt-5">₦{data.price}</h3>
               <div className="flex items-center gap-3">
                 <div className="rating">
                   <input
@@ -163,7 +166,9 @@ function DetailsPage() {
                     id="3"
                     onClick={(e) => setStar(e.target.value)}
                   />
-                  <label htmlFor="3">☆</label>
+                  <label className="text-[black]" htmlFor="3">
+                    ☆
+                  </label>
                   <input
                     type="radio"
                     name="rating"
@@ -181,9 +186,9 @@ function DetailsPage() {
                   />
                   <label htmlFor="1">☆</label>
                 </div>{" "}
-                <span className="inline">200 Reviews</span>
+                <span className="inline text-xs underline">200 Reviews</span>
               </div>
-              <div>
+              <div className="mt-5">
                 <h4>Color</h4>
                 <div className="flex gap-5">
                   <div className="bg-[red] h-[20px] w-[20px] rounded-full "></div>
@@ -192,9 +197,9 @@ function DetailsPage() {
                 </div>
               </div>
             </div>
-            <div className=" my-5">
+            <div className=" my-5 flex w-full text-sm">
               <button
-                className="bg-[blue] px-4 py-1 rounded-[8px] mr-2"
+                className="bg-[black] text-[white] px-4 py-1 rounded-[8px] mr-2"
                 onClick={() => {
                   addToCartNow({
                     ...data,
@@ -205,6 +210,17 @@ function DetailsPage() {
                 Add to cart
               </button>
               <button
+                className="bg-[white] text-[black] px-4 py-1 rounded-[8px] border-[1px] mr-2 border-[black]"
+                onClick={() =>
+                  addToFavourite({
+                    ...data,
+                    id: productId,
+                  })
+                }
+              >
+                Add to wishlist
+              </button>
+              {/* <button
                 className="bg-[red] px-4 py-1 rounded-[8px]"
                 onClick={() => {
                   removeFromCartNow({
@@ -213,10 +229,10 @@ function DetailsPage() {
                 }}
               >
                 Remove from cart
-              </button>
+              </button> */}
             </div>
             <div className="">
-              <button
+              {/* <button
                 className="bg-[blue] px-4 py-1 rounded-[8px] mr-2"
                 onClick={() =>
                   addToFavourite({
@@ -225,9 +241,9 @@ function DetailsPage() {
                   })
                 }
               >
-                favourite
-              </button>
-              <button
+                Add to wishlist
+              </button> */}
+              {/* <button
                 className="bg-[red] px-4 py-1 rounded-[8px]"
                 onClick={() =>
                   removeFromFavourited({
@@ -236,20 +252,21 @@ function DetailsPage() {
                 }
               >
                 De-favourite
-              </button>
+              </button> */}
             </div>
-            <div className={`pl-[50px] relative`}>
+            <div className={`pl-[50px] text-sm relative`}>
               <BsTruck
-                size={40}
-                className=" text-[red] absolute top-0  left-0"
+                size={20}
+                className=" text-[red] absolute my-auto  top-1  left-0"
               />
               <h3 className=" ">To delivered between</h3>
               <h4>July 10th - July 17th</h4>
             </div>
-            <div className="pl-[50px] relative ">
+            <div className="h-[0.5px] w-[100%] bg-[#423e3e] my-3"></div>
+            <div className="pl-[50px] relative text-sm  ">
               <FcHome
-                size={40}
-                className=" text-[#4e245f] absolute top-0  left-0"
+                size={20}
+                className=" text-[#4e245f] absolute top-0 my-auto bottom-0  left-0"
               />
               <h3 className=" ">
                 Home delivery <span>--N1,500</span>

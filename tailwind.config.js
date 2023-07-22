@@ -20,7 +20,9 @@ module.exports = {
       xl: "1280px",
       xxl: "1536px",
     },
-    extend: {},
+    extend: {
+      fontFamily: { satoshi: "'Satoshi', sans-serif" },
+    },
   },
   plugins: [],
 };
