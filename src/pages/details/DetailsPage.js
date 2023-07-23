@@ -35,7 +35,7 @@ function DetailsPage() {
             <h1 className="font-bold"> MERITBEEDS</h1>
           </Link>
         </div>
-        <div className="flex order-3 s:order-2 mt-5 xs:mt-[0px]  border border-solid px-5 py-2 rounded-[30px] items-center">
+        <div className="hidden xs:flex order-3 s:order-2 mt-5 xs:mt-[0px]  border border-solid px-5 py-2 rounded-[30px] items-center">
           <input type="text" placeholder="Search" />
           <BsSearch />
         </div>
@@ -122,23 +122,26 @@ function DetailsPage() {
           </div>
           {/* <h1 className=" bg-[purple]">DETAILS</h1> */}
 
-          <div className="basis-[45%] px-5">
+          <div className="basis-[45%] mt-5 px-5">
             <div className="details">
               <div className="flex items-center relative gap-10">
-                <h3 className="text-[20px] absolute left-0 top-0 font-semibold md:text-[36px]">
-                  {data.productTitle}{" "}
-                  <MdFavoriteBorder
-                    size={25}
-                    className="inline absolute right-[-40px] top-[4px] s:top-[18px]  text-[red]"
-                  />
+                <h3 className="text-[20px] whitespace-nowrap left-0 top-0 font-semibold md:text-[36px]">
+                  {data.productTitle}
                 </h3>
+                <MdFavoriteBorder
+                  size={25}
+                  className="inline mt-1 text-[red]"
+                />
               </div>
-              <h3 className="mt-16 font-medium">{data.category}</h3>
-              <h3 className="text-xs text-[black]">{data.description}</h3>
-              <h3>
-                Release Date:
+              {/* <h3 className="mt-16 font-medium">{data.category}</h3> */}
+              <h3 className="text-xs mt-10 text-[black]">{data.description}</h3>
+              <h3 className="text-xs font-bold mt-3">
+                RELEASE DATE:
                 <span className="ml-5 text-xs">
-                  {data.createdAt.toDate().toLocaleString()}
+                  {data.createdAt
+                    .toDate()
+                    .toLocaleString()
+                    .match(/^\d{1,2}\/\d{1,2}\/\d{4}/)}
                 </span>
               </h3>
               <h3 className="mt-5">₦{data.price}</h3>
