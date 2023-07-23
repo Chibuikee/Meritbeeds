@@ -119,7 +119,7 @@ function Navbar() {
             <h2>
               User: <span>{userlogInState && userlogInState?.displayName}</span>
             </h2>
-            {userlogInState?.displayName && (
+            {!userlogInState?.displayName && (
               <Link to="/Registration">
                 <button className=" px-4 py-1 rounded bg-blue-600">
                   Sign Up
@@ -128,14 +128,14 @@ function Navbar() {
             )}
             {userlogInState ? (
               <button
-                className="px-4 py-1 absolute bottom-10 rounded bg-red-600"
+                className="px-4 py-1  rounded bg-red-600"
                 onClick={logUserOut}
               >
                 Log out
               </button>
             ) : (
               <Link to="/Signin">
-                <button className="absolute bottom-10 px-4 py-1 rounded bg-blue-600">
+                <button className="px-4 py-1 rounded bg-green-600">
                   Sign in
                 </button>
               </Link>

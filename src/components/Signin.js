@@ -24,7 +24,7 @@ const Signin = () => {
         // const user = result.user;
 
         toast("Sign in succesful");
-        navigate("/Adminpage");
+        navigate("/");
       })
       .catch((error) => {
         // Handle Errors here.
@@ -45,7 +45,7 @@ const Signin = () => {
         const user = userCredential.user;
         // console.log(user);
         toast(`${user.email}`);
-        navigate("/Adminpage");
+        navigate("/");
         // ...
       })
       .catch((error) => {

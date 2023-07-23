@@ -53,25 +53,16 @@ function DetailsPage() {
       </div>
       {data && (
         <div className="w-full md:flex flex-row-reverse justify-between px-5">
-          <div className="basis-[60%]">
-            {pickedBag ? (
-              <div className="poster">
-                <img
-                  className="w-full h-[250px]"
-                  src={pickedBag?.url}
-                  alt="product"
-                />
-              </div>
-            ) : (
-              <div className="poster">
-                <img
-                  className="w-full h-[250px]"
-                  src={data.imageUrl}
-                  alt="product"
-                />
-              </div>
-            )}
-            <div className="flex gap-5 justify-center ">
+          <div className="basis-[60%] relative">
+            <div className="poster flex justify-center md:absolute top-[190px] left-10">
+              <img
+                className=" h-[250px]"
+                src={pickedBag ? pickedBag?.url : data.imageUrl}
+                alt="product"
+              />
+            </div>
+
+            <div className="flex gap-5 justify-center md:absolute top-[450px] left-10 ">
               <div
                 className={`poster ${
                   pickedBag?.name == "imageUrl" && "border"
@@ -122,10 +113,10 @@ function DetailsPage() {
           </div>
           {/* <h1 className=" bg-[purple]">DETAILS</h1> */}
 
-          <div className="basis-[45%] mt-5 px-5">
+          <div className="basis-[45%] mt-5 px-5 md:mt-16 ">
             <div className="details">
-              <div className="flex items-center relative gap-10">
-                <h3 className="text-[20px] whitespace-nowrap left-0 top-0 font-semibold md:text-[36px]">
+              <div className="flex items-center gap-10">
+                <h3 className="text-[20px] whitespace-nowrap font-semibold md:text-[36px]">
                   {data.productTitle}
                 </h3>
                 <MdFavoriteBorder
@@ -134,7 +125,7 @@ function DetailsPage() {
                 />
               </div>
               {/* <h3 className="mt-16 font-medium">{data.category}</h3> */}
-              <h3 className="text-xs mt-10 text-[black]">{data.description}</h3>
+              <h3 className="text-xs mt-5 text-[black]">{data.description}</h3>
               <h3 className="text-xs font-bold mt-3">
                 RELEASE DATE:
                 <span className="ml-5 text-xs">

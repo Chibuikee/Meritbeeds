@@ -15,7 +15,7 @@ import { useIsUserid } from "./customHooks/UserLogInState";
 
 function App() {
   const user = useIsUserid();
-  console.log("checking", user?.userID);
+  // console.log("checking", user?.userID);
   return (
     <div className="App">
       <header className="App-header">
@@ -27,21 +27,33 @@ function App() {
           <Route path="Details/:productId" element={<DetailsPage />} />
           <Route
             path="EditProduct/:productEditId"
-            element={user?.userID && <Editproduct />}
+            element={user?.userID ? <Editproduct /> : <Registration />}
           />
           <Route path="/Registration" element={<Registration />} />
           <Route path="/Signin" element={<Signin />} />
-          <Route path="/Adminpage" element={user?.userID && <Adminpage />} />
-          <Route path="/Users" element={user?.userID && <AllCustomers />} />
-          <Route path="/Orders" element={user?.userID && <CntTable />} />
-          <Route path="/Cart" element={<Cart />} />
+          <Route
+            path="/Adminpage"
+            element={user?.userID ? <Adminpage /> : <Registration />}
+          />
+          <Route
+            path="/Users"
+            element={user?.userID ? <AllCustomers /> : <Registration />}
+          />
+          <Route
+            path="/Orders"
+            element={user?.userID ? <CntTable /> : <Registration />}
+          />
+          <Route
+            path="/Cart"
+            element={user?.userID ? <Cart /> : <Registration />}
+          />
           {/* <Route
             path="/Testtingfunctionpage"
             element={<Testtingfunctionpage />}
           /> */}
           <Route
             path="/Updateprofile"
-            element={user?.userID && <Updateprofile />}
+            element={user?.userID ? <Updateprofile /> : <Registration />}
           />
         </Routes>
       </main>

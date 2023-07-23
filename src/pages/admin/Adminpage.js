@@ -11,9 +11,9 @@ function Adminpage() {
 
   return (
     <section>
-      <div>
+      <div className="s:ml-[200px]">
         <div className="pl-5">
-          <h1 className="">Pelumi</h1>Welcome to the Admin dashboard. You can
+          <h1 className="">Tinuke</h1>Welcome to the Admin dashboard. You can
           manage your store from this page.
         </div>
         <ItemsUpload />
