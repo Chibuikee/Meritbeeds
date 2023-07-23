@@ -11,7 +11,42 @@ export default function ProductBuilder({ product }) {
     toast.success("Merit product deleted successfully");
   }
   return (
-    <div className="w-[200px]">
+    <div className=" bg-[] rounded-[22px]">
+      <div className="flex justify-center rounded-[15px] py-10 px-2 bg-[rgba(224,229,206,1)]">
+        <Link to={`Details/${product.id}`}>
+          <img
+            className="w-[150px] h-[100px]"
+            src={product.imageUrl}
+            alt="product"
+          />
+        </Link>
+      </div>
+      <div className="preview">
+        <Link to={`Details/${product.id}`}>
+          <h3 className="truncate">{product.productTitle}</h3>
+        </Link>
+        {/* <h3>{product.shortDescription}</h3> */}
+        <h3>₦{product.price}</h3>
+      </div>
+      <div className="">
+        <button
+          className="bg-[#b18e8e] mb-1 mr-1 rounded-md px-2 py-1"
+          onClick={() => deleteProduct(product.id)}
+        >
+          Delete item
+        </button>
+        <Link to={`/Editproduct/${product.id}`}>
+          <button className="bg-[rgba(224,229,206,1)] rounded-md px-2 py-1">
+            Edit item
+          </button>
+        </Link>
+      </div>
+    </div>
+  );
+}
+
+{
+  /* <div className="w-[200px]">
       <div className="poster">
         <img
           className="w-[50px] h-[50px]"
@@ -34,6 +69,5 @@ export default function ProductBuilder({ product }) {
           </Link>
         </div>
       </div>
-    </div>
-  );
+    </div> */
 }

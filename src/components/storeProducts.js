@@ -15,9 +15,11 @@ export default function ProductPreview({ product }) {
       <div className="preview">
         <h3 className="truncate">{product.productTitle}</h3>
         {/* <h3>{product.shortDescription}</h3> */}
-        <h3>{product.price}</h3>
+        <h3>₦{product.price}</h3>
         <Link to={`Details/${product.id}`}>
-          <button className="">Details</button>
+          <button className="bg-[rgba(224,229,206,1)] mb-1 text-xs rounded-md px-2 py-1">
+            Details
+          </button>
         </Link>
       </div>
     </div>

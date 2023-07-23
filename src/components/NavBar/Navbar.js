@@ -113,7 +113,7 @@ function Navbar() {
             <Link to="/Users">
               <span>Users</span>
             </Link>
-            <Link to="/Testtingfunctionpage">
+            <Link to="/">
               <span>Testing page</span>
             </Link>
             <h2>

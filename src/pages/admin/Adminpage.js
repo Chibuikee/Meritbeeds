@@ -12,10 +12,15 @@ function Adminpage() {
   return (
     <section>
       <div className="s:ml-[200px]">
-        <div className="pl-5">
+        <div className="">
           <h1 className="">Tinuke</h1>Welcome to the Admin dashboard. You can
           manage your store from this page.
         </div>
+        <h1 className="text-[red]">
+          THIS PAGE IS UNDER DEVELOPMENT, ALTHOUGH ALMOST ALL FEATURES ARE
+          FUNCTIONAL, THE STYLING IS YET TO BE DONE DUE TO LACK OF A DESIGN, YOU
+          COULD RECOMMEND ONE.
+        </h1>
         <ItemsUpload />
 
         {/* <button
