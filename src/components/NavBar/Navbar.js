@@ -83,17 +83,17 @@ function Navbar() {
       >
         <div className="  flex  justify-between items-center mx-auto ">
           <div className=" flex flex-col gap-5 mt-4">
-            <div className="mb-6 right-0 xxxs:right-5 top-[33px] flex ">
+            <div className="mb-1 right-0 xxxs:right-5 top-[33px] ">
               <input type="checkbox" id="check" className="hidden" />
               <label
                 htmlFor="check"
-                className="navdrop-ctn  block md:hidden"
+                className="navdrop-ctn mt-1 md:hidden"
                 onClick={() => setNavBarToggle(!navBarToggle)}
               >
                 {navBarToggle ? (
-                  <RiCloseFill size={25} className="navdrop-2" />
+                  <RiCloseFill size={25} className="text-[white] navdrop-2" />
                 ) : null}
-              </label>
+              </label>{" "}
               <Link to="/">
                 <span className=" text-xl font-semibold whitespace-nowrap ">
                   Meritbeeds
