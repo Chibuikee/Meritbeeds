@@ -64,20 +64,15 @@ const Orders = ({ ordersData, ordersTableColumns }) => {
   return (
     <>
       <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter} />
-      <table {...getTableProps()} style={{ border: "solid 1px blue" }}>
-        <thead>
+      <table
+        {...getTableProps()}
+        className="w-full text-sm text-left text-gray-500 dark:text-gray-400"
+      >
+        <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
           {headerGroups.map((headerGroup) => (
             <tr {...headerGroup.getHeaderGroupProps()}>
               {headerGroup.headers.map((column) => (
-                <th
-                  {...column.getHeaderProps()}
-                  style={{
-                    borderBottom: "solid 3px red",
-                    background: "aliceblue",
-                    color: "black",
-                    fontWeight: "bold",
-                  }}
-                >
+                <th {...column.getHeaderProps()} className="px-6 py-3">
                   <div {...column.getSortByToggleProps()}>
                     {column.render("Header")}
                   </div>
@@ -99,11 +94,7 @@ const Orders = ({ ordersData, ordersTableColumns }) => {
                   return (
                     <td
                       {...cell.getCellProps()}
-                      style={{
-                        padding: "10px",
-                        border: "solid 1px gray",
-                        background: "papayawhip",
-                      }}
+                      className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
                     >
                       {
                         // : cell.column.Header == "Date" ? (
@@ -119,16 +110,23 @@ const Orders = ({ ordersData, ordersTableColumns }) => {
           })}
         </tbody>
       </table>
-      <div>
-        <span>
-          page{" "}
-          <strong>
-            {pageIndex + 1} of {pageOptions.length}
-          </strong>
+      <div className="pl-5 flex w-full items-center gap-5 pb-4 pt-4 shadow-md sm:rounded-lg">
+        <span class="flex gap-2 text-sm font-normal text-gray-500 dark:text-gray-400">
+          Showing{" "}
+          <span class="font-semibold text-gray-900 dark:text-white">
+            {pageIndex + 1}
+          </span>{" "}
+          of{" "}
+          <span class="font-semibold text-gray-900 dark:text-white">
+            {pageOptions.length}
+          </span>
         </span>
-        <span>
-          | Go to page:{" "}
+        <div className="flex gap-2 items-center text-sm font-normal text-gray-500 dark:text-gray-400">
+          <span className=" whitespace-nowrap text-sm font-normal text-gray-500 dark:text-gray-400">
+            | Go to page:{" "}
+          </span>
           <input
+            className="block p-1 pl-3 text-sm text-gray-900 border border-gray-300 rounded-lg w-20 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             type="number"
             defaultValue={pageIndex + 1}
             onChange={(e) => {
@@ -138,12 +136,13 @@ const Orders = ({ ordersData, ordersTableColumns }) => {
               gotoPage(pageNumber);
             }}
           />
-        </span>
+        </div>
         <select
           value={pageSize}
           onChange={(e) => {
             setPageSize(Number(e.target.value));
           }}
+          className=" ml-2 text-sm font-medium text-gray-500 dark:text-gray-400 rounded"
         >
           {[5, 7, 10, 15, 20, 25].map((pageSize) => (
             <option key={pageSize} value={pageSize}>
@@ -156,21 +155,21 @@ const Orders = ({ ordersData, ordersTableColumns }) => {
         </button>
         <button
           className={`${
-            !canPreviousPage ? "text-[red]" : "text-[green]"
-          } px-2 py-2`}
+            !canPreviousPage ? "text-[red]" : "text-gray-500"
+          } flex items-center justify-center text-sm font-normal px-3 h-8 leading-tight bg-white border border-gray-300 rounded-l-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white`}
           onClick={() => previousPage()}
           disabled={!canPreviousPage}
         >
-          previous
+          Previous
         </button>
         <button
           className={`${
-            !canNextPage ? "text-[red]" : "text-[green]"
-          } px-2 py-2`}
+            !canNextPage ? "text-[red]" : "text-gray-500"
+          } flex items-center justify-center text-sm font-normal px-3 h-8 leading-tight  bg-white border border-gray-300 rounded-r-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white`}
           onClick={() => nextPage()}
           disabled={!canNextPage}
         >
-          next
+          Next
         </button>{" "}
         <button onClick={() => gotoPage(pageCount - 1)} disabled={!canNextPage}>
           {">>"}

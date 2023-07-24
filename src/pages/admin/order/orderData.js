@@ -179,14 +179,14 @@ export const ordersTableColumns = [
           {index !== editMode ? (
             // if index is not the same as editmode state allow to be set to editing mode on click
             <button
-              className="basis-[50%] py-2 bg-[#ea00ff] mr-5"
+              className="basis-[50%] py-1 px-2 rounded-md text-sm bg-[#ea00ff] mr-3"
               onClick={() => handleEdit(index)}
             >
               Edit
             </button>
           ) : (
             <button
-              className="basis-[50%] py-2 bg-[blue]"
+              className="basis-[50%] py-1 px-2 rounded-md bg-[blue]"
               onClick={() => {
                 // old.map((row, index) => {
                 //     if (index === rowIndex) {
@@ -229,7 +229,7 @@ export const ordersTableColumns = [
           )}
 
           <button
-            className="basis-[50%] py-2 bg-[red]"
+            className="basis-[50%] py-1 rounded-md px-1 text-sm bg-[red]"
             onClick={() => {
               // reset editMode state before resetting readyUpdate state
               handleEdit(null);

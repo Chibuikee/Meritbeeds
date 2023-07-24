@@ -1,7 +1,7 @@
 export const ColumnFilter = ({ column }) => {
   const { filterValue, setFilter } = column;
   return (
-    <span className="absolute left-[200px] top-0 bg-red-600">
+    <span className="absolute right-[100px] top-[52px]">
       Filter Orders:{" "}
       {/* <input
         value={filterValue || ""}
@@ -13,6 +13,7 @@ export const ColumnFilter = ({ column }) => {
         // placeholder={filterValue}
         onChange={(e) => setFilter(e.target.value)}
         //   onBlur={onBlur}
+        className="ml-2 text-sm font-medium text-gray-500 dark:text-gray-400 rounded"
       >
         <option value="" label="All">
           All
